@@ -16,13 +16,16 @@ from Exp_Bias import experiment_bias, experiment_bias2
 from Exp_IrreducibleError import experiment_irreducible_error
 from Exp_withError import experimentWithError
 
+from animate import animate
+
 if __name__ == "__main__":
     params = {
             #experiment configs
             'num_runs': 1,
             'num_epochs': 100,
             'num_data_points': 1000,
-            'plt_show': True,
+            'plt_show': False,
+            'plt_save': True,
             'plot_show_epoch_freq': 10,
             
             #agents configs
@@ -37,14 +40,19 @@ if __name__ == "__main__":
             'plot_colors': ['r']          
         }
 
-    exp_bias = experiment_bias(params)
-    exp_bias.run_experiment()
+    # exp_bias = experiment_bias(params)
+    # exp_bias.run_experiment()
 
     # exp_bias = experiment_bias2(params)
     # exp_bias.run_experiment()
 
-    # exp_irriducible = experiment_irreducible_error(params)
-    # exp_irriducible.run_experiment()
+    exp_irriducible = experiment_irreducible_error(params)
+    exp_irriducible.run_experiment()
+
+    # animate
+    fp_in = "plots/irreducible_err/*.png"
+    fp_out = "plots/irreducible_err/animate.gif"
+    animate(fp_in, fp_out)
 
     # mu, sigma = exp_irriducible.models[0].test_model(exp_irriducible.x, ty)
     # # real_error = np.abs(exp.y - 2*exp.x)

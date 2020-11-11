@@ -69,7 +69,7 @@ class GeneralModel():
 
 # general model with error network
 
-class GeneralModel():
+class GeneralModelError():
     def __init__(self, params):
         self.hidden_layers_mu = params['hidden_layers_mu']
         self.hidden_layers_var = params['hidden_layers_var']
@@ -87,8 +87,7 @@ class GeneralModel():
                   'step_size': self.step_size,
                   'name':'error_network',
                   'hidden_layers':self.hidden_layers_var}
-        self.error_network = ErrorNetwork(params)  
-        self.error_network.__create_networks()
+        self.error_network = ErrorNetwork(params)
 
     def __model_output(self, batch_x):
         with torch.no_grad():

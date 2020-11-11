@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from GeneralModel import GeneralModel
+from time import time
 
 class experiment():
     def __init__(self, params):
@@ -13,6 +14,7 @@ class experiment():
         self.num_epochs = params['num_epochs']
         self.num_data_points = params['num_data_points']
         self.plt_show = params['plt_show']
+        self.plt_save = params['plt_save']
         self.plot_show_epoch_freq = params['plot_show_epoch_freq']
 
         #agents configs
@@ -66,9 +68,10 @@ class experiment():
             err = np.mean(self.error_list, axis=0)[:, i]
             err_bar = np.std(self.error_list, axis=0)[:, i]
             self.drawPlotUncertainty(range(len(err)), err, err_bar, 'model '+ self.models[i].name, self.plot_colors[i])
-        plt.title("error plot over all the runs")
-        plt.legend()
-        plt.show()          
+        if self.plt_save:
+            plt.title("error plot over all the runs")
+            plt.savefig('plots/new' + str(time()) + '.png')
+        
     
     def train_models(self):
         for a, model in enumerate(self.models):

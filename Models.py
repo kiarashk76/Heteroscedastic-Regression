@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+import copy
 
 # 1-dim
 # separated from the last layer
@@ -98,8 +99,8 @@ class StateTransitionModelSeparate(nn.Module):
 
 
     def forward(self, x):
-        l = x.copy()
-        vl = x.copy()
+        l = copy.copy(x)
+        vl = copy.copy(x)
         for i, lay in enumerate(self.layers_list):
             layer = lay
             l = torch.relu(layer(l))
@@ -215,7 +216,7 @@ class ErrorNetwork():
         self.__create_networks()
     
     def __create_networks(self):
-        self.error = ModelError(self.hidden_layers_error)
+        self.error = ModelError(self.hidden_layers)
 
     def __error_output(self, batch_x):
         with torch.no_grad():

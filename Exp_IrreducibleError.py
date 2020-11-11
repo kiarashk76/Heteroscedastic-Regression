@@ -34,7 +34,7 @@ class experiment_irreducible_error(experiment):
             self.error_list[run_number, epoch_number, a] = distance
 
             # draw plot till now
-            if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
+            if epoch_number % self.plot_show_epoch_freq == 0 and (self.plt_show or self.plt_save):
                 # mu, var = model.test_model(x, y)
                 # error = model.test_error(self.x, self.y)
 
@@ -52,3 +52,10 @@ class experiment_irreducible_error(experiment):
             plt.title('models after '+ str(epoch_number) +' epochs in run number ' + str(run_number+1))
             plt.legend()
             plt.show()
+            plt.close()
+        
+        if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_save:
+            plt.title('models after '+ str(epoch_number) +' epochs in run number ' + str(run_number+1))
+            plt.legend()
+            plt.savefig('plots/irreducible_err/' + f'{epoch_number:04}' + '.png')
+            plt.close()
