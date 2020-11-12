@@ -8,7 +8,7 @@ from GeneralModel import GeneralModel
 from time import time
 
 class experiment():
-    def __init__(self, params):
+    def __init__(self, params, experiment_name):
         #experiment configs
         self.num_runs = params['num_runs']
         self.num_epochs = params['num_epochs']
@@ -26,6 +26,8 @@ class experiment():
         self.batch_sizes = params['batch_sizes']
         self.step_sizes = params['step_sizes']
         self.plot_colors = params['plot_colors']
+        self.bias_available = params['bias_available']
+        self.experiment_name = experiment_name
 
         self.error_list = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
     def create_dataset(self):
@@ -46,7 +48,8 @@ class experiment():
                       "data_dim": self.data_dim,
                       "batch_size": self.batch_sizes[i],
                       "step_size": self.step_sizes[i],
-                      "name": self.names[i]}
+                      "name": self.names[i],
+                      "bias_available":self.bias_available[i]}
             m = GeneralModel(params)
             self.models.append(m)
 
@@ -68,9 +71,12 @@ class experiment():
             err = np.mean(self.error_list, axis=0)[:, i]
             err_bar = np.std(self.error_list, axis=0)[:, i]
             self.drawPlotUncertainty(range(len(err)), err, err_bar, 'model '+ self.models[i].name, self.plot_colors[i])
+        if self.plt_show:
+            plt.title("error plot over all the runs")
+            plt.show()
         if self.plt_save:
             plt.title("error plot over all the runs")
-            plt.savefig('plots/new' + str(time()) + '.png')
+            plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
         
     
     def train_models(self):
@@ -90,13 +96,21 @@ class experiment():
             # draw plot till now
             if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
                 # mu, var = model.test_model(x, y)
+                # error = model.test_error(self.x, self.y) #only for GeneralModelwithError
                 self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], var[:, 0], 'model '+ model.name, self.plot_colors[a])
         
         if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
-            plt.plot(self.x, self.y, 'black', label='ground truth')
+            plt.plot(self.x, self.y, 'ko', markersize=0.5, label='ground truth', alpha=0.5)
             plt.title('models after '+ str(epoch_number) +' epochs in run number ' + str(run_number+1))
             plt.legend()
             plt.show()
+            plt.close()
+        
+        if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_save:
+            plt.title('models after '+ str(epoch_number) +' epochs in run number ' + str(run_number+1))
+            plt.legend()
+            plt.savefig('plots/' + self.experiment_name + f'{epoch_number:04}' + '.png')
+            plt.close()
 
     def drawPlotUncertainty(self, x, y, y_err, label, color):
         plt.plot(x, y, color, label=label)

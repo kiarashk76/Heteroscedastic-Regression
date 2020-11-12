@@ -16,11 +16,12 @@ class GeneralModel():
         self.batch_size = params['batch_size']
         self.step_size = params['step_size']
         self.name = params['name']
+        self.bias_available = params['bias_available']
 
         self.__create_networks()
     
     def __create_networks(self):
-        self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var)#, self.data_dim)
+        self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var, bias_available=self.bias_available)#, self.data_dim)
 
     def __model_output(self, batch_x):
         with torch.no_grad():
@@ -50,7 +51,9 @@ class GeneralModel():
                 raise NotImplementedError("other loss functions hasn't been implemented yet!")
         loss.backward()
         if torch.isnan(loss):
+            print(torch.log(var), (pred - y) ** 2, (2 * var))
             print("loss is nan")
+            exit(0)
 
         optimizer = optim.Adam(self.model.parameters(), lr=self.step_size)
         # optimizer = optim.SGD(model.parameters(), lr=step_size)
@@ -69,7 +72,7 @@ class GeneralModel():
 
 # general model with error network
 
-class GeneralModelError():
+class GeneralModelwithError():
     def __init__(self, params):
         self.hidden_layers_mu = params['hidden_layers_mu']
         self.hidden_layers_var = params['hidden_layers_var']

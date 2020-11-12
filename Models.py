@@ -60,12 +60,12 @@ class StateTransitionModel(nn.Module):
 
 # separated from the begining
 class StateTransitionModelSeparate(nn.Module):
-    def __init__(self, num_hidden_mu, num_hidden_var):
+    def __init__(self, num_hidden_mu, num_hidden_var, bias_available=True):
         super(StateTransitionModelSeparate, self).__init__()
         self.layers_list = []
         self.vlayers_list = []
         if len(num_hidden_mu) == 0:
-            self.mu = nn.Linear(1, 1, bias=False)
+            self.mu = nn.Linear(1, 1, bias=bias_available)
             torch.nn.init.xavier_uniform_(self.mu.weight, gain=1.0)
         else:
             for i, num in enumerate(num_hidden_mu):

@@ -30,21 +30,23 @@ if __name__ == "__main__":
             
             #agents configs
             'num_agents': 1,
-            'names': ['linear'],
+            'names': ['het'],
             'hidden_layers_mu': [[]],
-            'hidden_layers_var':[[]],
-            'data_dim':2,
+            'hidden_layers_var':[[32, 32]],
+            'data_dim':1,
             'hidden_layers_error':[[]],
             'batch_sizes': [8],
             'step_sizes': [0.001],
-            'plot_colors': ['r']          
+            'plot_colors': ['r'],     
+            'loss_type': ['1'],
+            'bias_available':[True]        
         }
 
     # exp_bias = experiment_bias(params)
     # exp_bias.run_experiment()
 
-    # exp_bias = experiment_bias2(params)
-    # exp_bias.run_experiment()
+    # exp_bias2 = experiment_bias2(params)
+    # exp_bias2.run_experiment()
 
     exp_irriducible = experiment_irreducible_error(params)
     exp_irriducible.run_experiment()
