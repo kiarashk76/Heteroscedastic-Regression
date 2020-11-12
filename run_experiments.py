@@ -42,18 +42,21 @@ if __name__ == "__main__":
             'bias_available':[True]        
         }
 
+    exp_names = ["bias", "bias2", "irreducible_err"]
+
     # exp_bias = experiment_bias(params)
     # exp_bias.run_experiment()
 
     # exp_bias2 = experiment_bias2(params)
     # exp_bias2.run_experiment()
 
-    exp_irriducible = experiment_irreducible_error(params)
+    exp_name = exp_names[2]
+    exp_irriducible = experiment_irreducible_error(params, exp_name)
     exp_irriducible.run_experiment()
 
     # animate
-    fp_in = "plots/irreducible_err/*.png"
-    fp_out = "plots/irreducible_err/animate.gif"
+    fp_in = "plots/" + exp_name + "/*.png"
+    fp_out = "plots/" + exp_name + "/animate.gif"
     animate(fp_in, fp_out)
 
     # mu, sigma = exp_irriducible.models[0].test_model(exp_irriducible.x, ty)

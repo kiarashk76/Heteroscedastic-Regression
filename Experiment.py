@@ -74,6 +74,7 @@ class experiment():
         if self.plt_show:
             plt.title("error plot over all the runs")
             plt.show()
+            plt.close()
         if self.plt_save:
             plt.title("error plot over all the runs")
             plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
@@ -102,13 +103,12 @@ class experiment():
         if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
             plt.plot(self.x, self.y, 'ko', markersize=0.5, label='ground truth', alpha=0.5)
             plt.title('models after '+ str(epoch_number) +' epochs in run number ' + str(run_number+1))
-            plt.legend()
             plt.show()
             plt.close()
         
         if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_save:
+            plt.plot(self.x, self.y, 'ko', markersize=0.5, label='ground truth', alpha=0.5)
             plt.title('models after '+ str(epoch_number) +' epochs in run number ' + str(run_number+1))
-            plt.legend()
             plt.savefig('plots/' + self.experiment_name + f'{epoch_number:04}' + '.png')
             plt.close()
 
