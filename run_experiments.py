@@ -21,11 +21,11 @@ from animate import animate
 if __name__ == "__main__":
     params = {
             #experiment configs
-            'num_runs': 1,
-            'num_epochs': 100,
-            'num_data_points': 5000,
-            'plt_show': True,
-            'plt_save': True,
+            'num_runs': 3,
+            'num_epochs': 50,
+            'num_data_points': 100,
+            'plt_show': False,
+            'plt_save': False,
             'plot_show_epoch_freq': 10,
             
             #agents configs

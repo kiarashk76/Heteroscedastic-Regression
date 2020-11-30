@@ -33,7 +33,7 @@ class experiment():
         self.error_list = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
         self.error_list_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
         self.learn_mu = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
-        self.learn_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
+        self.learn_var = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
     def create_dataset(self):
         # create the dataset
         range_data_points = (-1, 2)
@@ -100,6 +100,27 @@ class experiment():
             plt.title("error plot over all the runs for sigma")
             plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
 
+        #average learning plot
+        for i in range(self.num_agents):
+            average_learn_mu = np.mean(self.learn_mu, axis=0)[:, i]
+            average_learn_var = np.mean(self.learn_var, axis=0)[:, i]
+            plt.plot(average_learn_var[-1], label='var')
+
+        if self.plt_show:
+            plt.title("average learning curve")
+            plt.legend()
+            plt.show()
+            plt.close()
+
+        with open('data/learn_mu_'+str(self.step_sizes)+'.npy', 'wb') as f:
+            np.save(f, self.learn_mu)
+        with open('data/learn_var_'+str(self.step_sizes)+'.npy', 'wb') as f:
+            np.save(f, self.learn_var)
+        with open('data/error_list'+str(self.step_sizes)+'.npy', 'wb') as f:
+            np.save(f, self.error_list)
+        with open('data/error_list_sigma'+str(self.step_sizes)+'.npy', 'wb') as f:
+            np.save(f, self.error_list_sigma)
+
     def train_models(self):
         for a, model in enumerate(self.models):
             for _ in range(self.num_data_points // self.batch_sizes[a]):
@@ -118,7 +139,7 @@ class experiment():
             if not self.mu_training[a]:
                 mu = torch.from_numpy(self.mu).float()
             self.learn_mu[run_number, epoch_number, a] = mu
-            self.learn_sigma[run_number, epoch_number, a] = np.sqrt(var)
+            self.learn_var[run_number, epoch_number, a] = var
             distance = torch.dist(torch.from_numpy(self.y).float(), mu)
             self.error_list[run_number, epoch_number, a] = distance
 
