@@ -15,16 +15,17 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 from Exp_Bias import experiment_bias, experiment_bias2
 from Exp_IrreducibleError import experiment_irreducible_error
 from Exp_withError import experimentWithError
+from Experiment import experiment
 
 from animate import animate
 
 if __name__ == "__main__":
     params = {
             #experiment configs
-            'num_runs': 3,
-            'num_epochs': 50,
-            'num_data_points': 100,
-            'plt_show': False,
+            'num_runs': 1,
+            'num_epochs': 500,
+            'num_data_points': 1000,
+            'plt_show': True,
             'plt_save': False,
             'plot_show_epoch_freq': 10,
             
@@ -32,11 +33,11 @@ if __name__ == "__main__":
             'num_agents': 1,
             'names': ['het'],
             'hidden_layers_mu': [[]],
-            'hidden_layers_var':[[]],
+            'hidden_layers_var':[[64, 64]],
             'data_dim':1,
             'hidden_layers_error':[[]],
             'batch_sizes': [8],
-            'step_sizes': [0.0005],
+            'step_sizes': [0.001],
             'plot_colors': ['r'],
             'loss_type': ['1'],
             'bias_available':[True],
@@ -53,8 +54,11 @@ if __name__ == "__main__":
     # exp_bias2.run_experiment()
 
     # exp_name = exp_names[2]
-    exp_irriducible = experiment_irreducible_error(params, exp_name)
-    exp_irriducible.run_experiment()
+    # exp_irriducible = experiment_irreducible_error(params, exp_name)
+    # exp_irriducible.run_experiment()
+
+    exp = experiment(params, exp_name)
+    exp.run_experiment()
 
     # animate
     fp_in = "plots/" + exp_name + "/*.png"

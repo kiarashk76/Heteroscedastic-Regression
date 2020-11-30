@@ -19,9 +19,12 @@ class GeneralModel():
         self.bias_available = params['bias_available']
 
         self.__create_networks()
+
     
     def __create_networks(self):
         self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var, bias_available=self.bias_available)#, self.data_dim)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=self.step_size)
+        # self.optimizer = optim.SGD(self.model.parameters(), lr=self.step_size)
 
     def __model_output(self, batch_x):
         with torch.no_grad():
@@ -52,6 +55,7 @@ class GeneralModel():
                 loss = torch.mean(((mu - y) ** 2) / (2 * var) + 0.5 * torch.log(var))
             else:
                 raise NotImplementedError("other loss functions hasn't been implemented yet!")
+        self.optimizer.zero_grad()
         loss.backward()
         # print(loss)
         if torch.isnan(loss):
@@ -59,11 +63,8 @@ class GeneralModel():
             print("loss is nan")
             exit(0)
 
-        optimizer = optim.Adam(self.model.parameters(), lr=self.step_size)
-        # optimizer = optim.SGD(model.parameters(), lr=step_size)
+        self.optimizer.step()
 
-        optimizer.step()
-        optimizer.zero_grad()
 
         
     def test_model(self, batch_x, batch_y):
