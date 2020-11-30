@@ -32,6 +32,8 @@ class experiment():
 
         self.error_list = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
         self.error_list_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
+        self.learn_mu = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
+        self.learn_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
     def create_dataset(self):
         # create the dataset
         range_data_points = (-1, 2)
@@ -115,6 +117,8 @@ class experiment():
             mu, var = model.test_model(self.x, self.y)
             if not self.mu_training[a]:
                 mu = torch.from_numpy(self.mu).float()
+            self.learn_mu[run_number, epoch_number, a] = mu
+            self.learn_sigma[run_number, epoch_number, a] = np.sqrt(var)
             distance = torch.dist(torch.from_numpy(self.y).float(), mu)
             self.error_list[run_number, epoch_number, a] = distance
 

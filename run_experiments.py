@@ -21,7 +21,7 @@ from animate import animate
 if __name__ == "__main__":
     params = {
             #experiment configs
-            'num_runs': 10,
+            'num_runs': 1,
             'num_epochs': 100,
             'num_data_points': 5000,
             'plt_show': True,
@@ -36,7 +36,7 @@ if __name__ == "__main__":
             'data_dim':1,
             'hidden_layers_error':[[]],
             'batch_sizes': [8],
-            'step_sizes': [0.001],
+            'step_sizes': [0.0005],
             'plot_colors': ['r'],
             'loss_type': ['1'],
             'bias_available':[True],
