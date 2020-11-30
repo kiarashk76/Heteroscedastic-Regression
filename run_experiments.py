@@ -21,10 +21,10 @@ from animate import animate
 if __name__ == "__main__":
     params = {
             #experiment configs
-            'num_runs': 1,
+            'num_runs': 10,
             'num_epochs': 100,
-            'num_data_points': 1000,
-            'plt_show': False,
+            'num_data_points': 5000,
+            'plt_show': True,
             'plt_save': True,
             'plot_show_epoch_freq': 10,
             
@@ -32,25 +32,27 @@ if __name__ == "__main__":
             'num_agents': 1,
             'names': ['het'],
             'hidden_layers_mu': [[]],
-            'hidden_layers_var':[[32, 32]],
+            'hidden_layers_var':[[]],
             'data_dim':1,
             'hidden_layers_error':[[]],
             'batch_sizes': [8],
             'step_sizes': [0.001],
-            'plot_colors': ['r'],     
+            'plot_colors': ['r'],
             'loss_type': ['1'],
-            'bias_available':[True]        
+            'bias_available':[True],
+            'mu_training':[False],
         }
 
     exp_names = ["bias", "bias2", "irreducible_err"]
 
-    # exp_bias = experiment_bias(params)
+    exp_name = exp_names[2]
+    # exp_bias = experiment_bias(params, exp_name)
     # exp_bias.run_experiment()
 
     # exp_bias2 = experiment_bias2(params)
     # exp_bias2.run_experiment()
 
-    exp_name = exp_names[2]
+    # exp_name = exp_names[2]
     exp_irriducible = experiment_irreducible_error(params, exp_name)
     exp_irriducible.run_experiment()
 

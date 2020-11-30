@@ -27,9 +27,11 @@ class experiment():
         self.step_sizes = params['step_sizes']
         self.plot_colors = params['plot_colors']
         self.bias_available = params['bias_available']
+        self.mu_training = params['mu_training']
         self.experiment_name = experiment_name
 
         self.error_list = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
+        self.error_list_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
     def create_dataset(self):
         # create the dataset
         range_data_points = (-1, 2)
@@ -37,7 +39,8 @@ class experiment():
                               self.num_data_points * self.data_dim)
         x = np.reshape(np.sort(x), (self.num_data_points, self.data_dim))
         y = x + np.sin(4 * x) + np.sin(13 * x)
-        self.x, self.y = x, y
+        mu = x + np.sin(4 * x) + np.sin(13 * x)
+        self.x, self.y, self.mu = x, y, mu
 
     def init_models(self):
         #initializing the models
@@ -66,31 +69,52 @@ class experiment():
                 self.train_models()
                 self.validate_models(r, e)
 
-        # error plot
+        # error plot for mu
         for i in range(self.num_agents):
             err = np.mean(self.error_list, axis=0)[:, i]
             err_bar = np.std(self.error_list, axis=0)[:, i]
             self.drawPlotUncertainty(range(len(err)), err, err_bar, 'model '+ self.models[i].name, self.plot_colors[i])
         if self.plt_show:
             plt.title("error plot over all the runs")
+            plt.legend()
             plt.show()
             plt.close()
         if self.plt_save:
             plt.title("error plot over all the runs")
             plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
-        
-    
+
+        # error plot for sigma
+        for i in range(self.num_agents):
+            err = np.mean(self.error_list_sigma, axis=0)[:, i]
+            err_bar = np.std(self.error_list_sigma, axis=0)[:, i]
+            self.drawPlotUncertainty(range(len(err)), err, err_bar, 'model ' + self.models[i].name,
+                                     self.plot_colors[i])
+        if self.plt_show:
+            plt.title("error plot over all the runs for sigma")
+            plt.legend()
+            plt.show()
+            plt.close()
+        if self.plt_save:
+            plt.title("error plot over all the runs for sigma")
+            plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
+
     def train_models(self):
         for a, model in enumerate(self.models):
             for _ in range(self.num_data_points // self.batch_sizes[a]):
                 ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y = self.x[ind], self.y[ind]
-                model.train_model(batch_x, batch_y)
+                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
+                # give batch_mu so mu not being learned
+                if self.mu_training[a]:
+                    model.train_model(batch_x, batch_y, batch_mu=None)
+                else:
+                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
     
     def validate_models(self, run_number, epoch_number):
         #validate models
         for a, model in enumerate(self.models):
             mu, var = model.test_model(self.x, self.y)
+            if not self.mu_training[a]:
+                mu = torch.from_numpy(self.mu).float()
             distance = torch.dist(torch.from_numpy(self.y).float(), mu)
             self.error_list[run_number, epoch_number, a] = distance
 
@@ -112,9 +136,9 @@ class experiment():
             plt.savefig('plots/' + self.experiment_name + f'{epoch_number:04}' + '.png')
             plt.close()
 
-    def drawPlotUncertainty(self, x, y, y_err, label, color):
-        plt.plot(x, y, color, label=label)
-        plt.fill_between(x,
+    def drawPlotUncertainty(self, x, y, y_err, label, color, axis=plt):
+        axis.plot(x, y, color, label=label)
+        axis.fill_between(x,
                         y - y_err,
                         y + y_err,
                         facecolor=color, alpha=0.4, edgecolor='none')

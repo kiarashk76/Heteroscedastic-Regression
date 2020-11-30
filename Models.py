@@ -87,7 +87,6 @@ class StateTransitionModelSeparate(nn.Module):
             for i, num in enumerate(num_hidden_var):
                 if i == 0:
                     vl = nn.Linear(1, num)
-                    
                 else:
                     vl = nn.Linear(num_hidden_var[i - 1], num)
                 torch.nn.init.xavier_uniform_(vl.weight, gain=1.0)
@@ -108,7 +107,8 @@ class StateTransitionModelSeparate(nn.Module):
             vlayer = lay
             vl = torch.relu(vlayer(vl))
         mu = self.mu(l)
-        var = torch.log(1 + torch.exp(self.var(vl)))
+        var = F.softplus(self.var(vl)) + 10**-6
+
         return mu, var
 
 

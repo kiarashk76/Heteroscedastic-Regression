@@ -12,7 +12,7 @@ class experiment_bias(experiment):
         range_data_points = (-2, 2)
         x = np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1)
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
-        y = 5* (x ** 2 )
+        y = 0.5*(x ** 2 )
         self.x, self.y = x, y
 
 class experiment_bias2(experiment):
