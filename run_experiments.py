@@ -45,6 +45,10 @@ if __name__ == "__main__":
         }
 
 #  ******************          Fixed Mu Experiments !
+    params['mu_training'] = [False] * 10
+    params['hidden_layers_var'] = [[]] * 10
+    params['loss_type'] = ['1'] * 10
+
     exp_name = 'Irre_fixedMu_linearNoise'
     exp = experiment_irreducible_error1(params, exp_name)
     exp.run_experiment()
@@ -58,60 +62,77 @@ if __name__ == "__main__":
     exp.run_experiment()
 
 # ********
+    params['hidden_layers_var'] = [[64, 64]] * 10
+
     # relu activation
     exp_name = 'Irre_fixedMu_rangeUniformNoise'
-    params['hidden_layers_var'] = [[64, 64]] * 10
     exp = experiment_irreducible_error4(params, exp_name)
     exp.run_experiment()
 
     #relu activation
-    params['hidden_layers_var'] = [[64]]*10
     exp_name = 'Bias_fixedMu_rangefixedBias'
     exp = experiment_bias2(params, exp_name)
     exp.run_experiment()
 
+    # relu activation
+    exp_name = 'Bias_fixedMu_rangelinearBias'
+    exp = experiment_bias4(params, exp_name)
+    exp.run_experiment()
+
     # tanh activation
-    params['hidden_layers_var'] = [[64, 64]]*10
     exp_name = 'IrreBias_fixedMu_sinNoise_fixedBias'
     exp = experiment_irreducible_error3(params, exp_name)
     exp.run_experiment()
 
 
 #  ******************      Not Fixed Mu Experiments !
-# ********
-    #relu activation
-    params['hidden_layers_var'] = [[64]]*10
     params['mu_training'] = [True]*10
+
+# ********
+    params['hidden_layers_var'] = [[64, 64]]*10
+
+    params['loss_type'] = ['1']*10
+    #relu activation
     exp_name = 'Bias_rangefixedBias'
     exp = experiment_bias2(params, exp_name)
     exp.run_experiment()
 
-    params['hidden_layers_var'] = [[64]] * 10
-    params['mu_training'] = [True] * 10
-    params['loss_type'] =  ['3']*10
+    params['loss_type'] = ['3']*10
     exp_name = 'RegularReg_Bias_rangefixedBias'
     exp = experiment_bias2(params, exp_name)
     exp.run_experiment()
 
 # ********
-    # relu activation
-    exp_name = 'Irre_rangeUniformNoise'
     params['hidden_layers_var'] = [[64, 64]] * 10
-    params['mu_training'] = [True]*10
+
+    params['loss_type'] = ['1'] * 10
+    # relu activation
+    exp_name = 'Bias_rangelinearBias'
+    exp = experiment_bias4(params, exp_name)
+    exp.run_experiment()
+
+    params['loss_type'] = ['3'] * 10
+    exp_name = 'RegularReg_Bias_rangelinearBias'
+    exp = experiment_bias4(params, exp_name)
+    exp.run_experiment()
+
+# ********
+    params['hidden_layers_var'] = [[64, 64]] * 10
+
+    # relu activation
+    params['loss_type'] = ['1'] * 10
+    exp_name = 'Irre_rangeUniformNoise'
     exp = experiment_irreducible_error4(params, exp_name)
     exp.run_experiment()
 
+    params['loss_type'] = ['3'] * 10
     exp_name = 'RegularReg_Irre_rangeUniformNoise'
-    params['hidden_layers_var'] = [[64, 64]] * 10
-    params['mu_training'] = [True] * 10
-    params['loss_type'] = ['3']*10
     exp = experiment_irreducible_error4(params, exp_name)
     exp.run_experiment()
 
 # ********
     # relu activation
     params['hidden_layers_var'] = [[64, 64]] * 10
-    params['mu_training'] = [True] * 10
     params['loss_type'] =  ['1']*10
 
     exp_name = 'Bias_quadraticBias1'
@@ -130,7 +151,6 @@ if __name__ == "__main__":
     exp.run_experiment()
 
     params['hidden_layers_var'] = [[64, 64]] * 10
-    params['mu_training'] = [True] * 10
     params['loss_type'] = ['3'] * 10
 
     exp_name = 'RegularReg_Bias_quadraticBias1'
