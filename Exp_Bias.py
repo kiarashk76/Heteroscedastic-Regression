@@ -160,11 +160,9 @@ class experiment_bias3(experiment):
         range_data_points = (-2, 2)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
-        self.noise = np.zeros_like(x)
-        for i in range(x.shape[0]):
-            self.noise[i] = np.random.normal(0, np.exp(- x[i]**2) )
-        y = self.A*(x ** 2) + self.noise
-        mu = self.A*(x ** 2) + self.noise
+
+        y = self.A*(x ** 2)
+        mu = self.A*(x ** 2)
         self.x, self.y, self.mu = x, y, mu
 
     def train_models(self):
@@ -299,3 +297,20 @@ class experiment_bias4(experiment):
             plt.title('models after ' + str(epoch_number) + ' epochs in run number ' + str(run_number + 1))
             plt.savefig('plots/' + self.experiment_name + f'{epoch_number:04}' + '.png')
             plt.close()
+
+class experiment_bias5(experiment):
+    def __init__(self, params, experiment_name):
+        experiment.__init__(self, params, experiment_name)
+        self.A = 0.5
+
+    def create_dataset(self):
+        # create the dataset
+        range_data_points = (-2, 2)
+        x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
+        x = np.reshape(np.sort(x), (self.num_data_points, 1))
+        self.noise = np.zeros_like(x)
+        for i in range(x.shape[0]):
+            self.noise[i] = np.random.normal(0, np.exp(- x[i]**2) )
+        y = self.A*(x ** 2) + self.noise
+        mu = self.A*(x ** 2) + self.noise
+        self.x, self.y, self.mu = x, y, mu

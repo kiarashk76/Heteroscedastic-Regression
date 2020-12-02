@@ -20,13 +20,13 @@ from Experiment import experiment
 from animate import animate
 
 if __name__ == "__main__":
-    aa = 1
+    aa = 10
     params = {
             #experiment configs
-            'num_runs': 3,
+            'num_runs': 1,
             'num_epochs': 200,
             'num_data_points': 1000,
-            'plt_show': True,
+            'plt_show': False,
             'plt_save': False,
             'plot_show_epoch_freq': 20,
             
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     exp_name = 'Irre_fixedMu_linearNoise'
     exp = experiment_irreducible_error1(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     exp_name = 'IrreBias_fixedMu_linearNoise_fixedBias'
     exp = experiment_irreducible_error2(params, exp_name)

@@ -6,6 +6,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from GeneralModel import GeneralModel
 from time import time
+import pickle
 
 class experiment():
     def __init__(self, params, experiment_name):
@@ -114,20 +115,16 @@ class experiment():
             plt.show()
             plt.close()
 
-        with open('data/datasetx'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
-            np.save(f, self.x)
-        with open('data/datasety'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
-            np.save(f, self.y)
-
-        with open('data/learn_mu_'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
-            np.save(f, self.learn_mu)
-        with open('data/learn_var_'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
-            np.save(f, self.learn_var)
-        with open('data/error_list'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
-            np.save(f, self.error_list)
-        with open('data/error_list_sigma'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
-            np.save(f, self.error_list_sigma)
-
+        with open('data/'+self.experiment_name+'.p', 'wb') as f:
+            data = {
+                'x': self.x,
+                'y': self.y,
+                'learn_mu': self.learn_mu,
+                'learn_var': self.learn_var,
+                'mu_error_list': self.error_list,
+                'sigma_error_list': self.error_list_sigma
+            }
+            pickle.dump(data, f)
 
     def train_models(self):
         for a, model in enumerate(self.models):

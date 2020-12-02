@@ -1,4 +1,8 @@
-import numpy as np
+import pickle
 
-a = np.array([1,2,3])
-print(np.sqrt(a))
+
+with open('data.p', 'rb') as fp:
+    data = pickle.load(fp)
+# data = {"khar":2}
+# with open('data.p', 'wb') as fp:
+#     pickle.dump(data, fp)
