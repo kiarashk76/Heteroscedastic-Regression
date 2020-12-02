@@ -23,9 +23,9 @@ if __name__ == "__main__":
     aa = 10
     params = {
             #experiment configs
-            'num_runs': 1,
-            'num_epochs': 200,
-            'num_data_points': 1000,
+            'num_runs': 30,
+            'num_epochs': 500,
+            'num_data_points': 5000,
             'plt_show': False,
             'plt_save': False,
             'plot_show_epoch_freq': 20,
@@ -38,7 +38,7 @@ if __name__ == "__main__":
             'data_dim':1,
             'hidden_layers_error':[[]]*aa,
             'batch_sizes': [16]*aa,
-            'step_sizes': [0.001], #[2**-i for i in range(5, 15)],
+            'step_sizes': [2**-i for i in range(5, 15)],
             'plot_colors': ['r']*aa,
             'loss_type': ['1']*aa,
             'bias_available':[True]*aa,
@@ -56,12 +56,12 @@ if __name__ == "__main__":
 
     exp_name = 'IrreBias_fixedMu_linearNoise_fixedBias'
     exp = experiment_irreducible_error2(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     params['hidden_layers_var'] = [[64,64]] * 10
     exp_name = 'Bias_fixedMu_linearBias'
     exp = experiment_bias1(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
 # ********
     params['hidden_layers_var'] = [[64, 64]] * 10
@@ -69,22 +69,22 @@ if __name__ == "__main__":
     # relu activation
     exp_name = 'Irre_fixedMu_rangeUniformNoise'
     exp = experiment_irreducible_error4(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     #relu activation
     exp_name = 'Bias_fixedMu_rangefixedBias'
     exp = experiment_bias2(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     # relu activation
     exp_name = 'Bias_fixedMu_rangelinearBias'
     exp = experiment_bias4(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     # tanh activation
     exp_name = 'IrreBias_fixedMu_sinNoise_fixedBias'
     exp = experiment_irreducible_error3(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
 
 #  ******************      Not Fixed Mu Experiments !
@@ -97,12 +97,12 @@ if __name__ == "__main__":
     #relu activation
     exp_name = 'Bias_rangefixedBias'
     exp = experiment_bias2(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     params['loss_type'] = ['3']*10
     exp_name = 'RegularReg_Bias_rangefixedBias'
     exp = experiment_bias2(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
 # ********
     params['hidden_layers_var'] = [[64, 64]] * 10
@@ -111,12 +111,12 @@ if __name__ == "__main__":
     # relu activation
     exp_name = 'Bias_rangelinearBias'
     exp = experiment_bias4(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     params['loss_type'] = ['3'] * 10
     exp_name = 'RegularReg_Bias_rangelinearBias'
     exp = experiment_bias4(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
 # ********
     params['hidden_layers_var'] = [[64, 64]] * 10
@@ -125,12 +125,12 @@ if __name__ == "__main__":
     params['loss_type'] = ['1'] * 10
     exp_name = 'Irre_rangeUniformNoise'
     exp = experiment_irreducible_error4(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     params['loss_type'] = ['3'] * 10
     exp_name = 'RegularReg_Irre_rangeUniformNoise'
     exp = experiment_irreducible_error4(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
 # ********
     # relu activation
@@ -145,12 +145,12 @@ if __name__ == "__main__":
     exp_name = 'Bias_quadraticBias2'
     exp = experiment_bias3(params, exp_name)
     exp.A = 0.5
-    # exp.run_experiment()
+    exp.run_experiment()
 
     exp_name = 'Bias_quadraticBias3'
     exp = experiment_bias3(params, exp_name)
     exp.A = 2**-4
-    # exp.run_experiment()
+    exp.run_experiment()
 
     params['hidden_layers_var'] = [[64, 64]] * 10
     params['loss_type'] = ['3'] * 10
@@ -170,6 +170,43 @@ if __name__ == "__main__":
     exp.A = 2 ** -4
     exp.run_experiment()
 # ********
+
+    # relu activation
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    params['loss_type'] = ['1'] * 10
+
+    exp_name = 'Bias_FancyquadraticBias1'
+    exp = experiment_bias5(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+
+    exp_name = 'Bias_FancyquadraticBias2'
+    exp = experiment_bias5(params, exp_name)
+    exp.A = 0.5
+    exp.run_experiment()
+
+    exp_name = 'Bias_FancyquadraticBias3'
+    exp = experiment_bias5(params, exp_name)
+    exp.A = 2 ** -4
+    exp.run_experiment()
+
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    params['loss_type'] = ['3'] * 10
+
+    exp_name = 'RegularReg_Bias_FancyquadraticBias1'
+    exp = experiment_bias5(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+
+    exp_name = 'RegularReg_Bias_FancyquadraticBias2'
+    exp = experiment_bias5(params, exp_name)
+    exp.A = 0.5
+    exp.run_experiment()
+
+    exp_name = 'RegularReg_Bias_FancyquadraticBias3'
+    exp = experiment_bias5(params, exp_name)
+    exp.A = 2 ** -4
+    exp.run_experiment()
 
     # animate
     fp_in = "plots/" + exp_name + "/*.png"
