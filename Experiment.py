@@ -112,13 +112,13 @@ class experiment():
             plt.show()
             plt.close()
 
-        with open('data/learn_mu_'+str(self.step_sizes)+'.npy', 'wb') as f:
+        with open('data/learn_mu_'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
             np.save(f, self.learn_mu)
-        with open('data/learn_var_'+str(self.step_sizes)+'.npy', 'wb') as f:
+        with open('data/learn_var_'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
             np.save(f, self.learn_var)
-        with open('data/error_list'+str(self.step_sizes)+'.npy', 'wb') as f:
+        with open('data/error_list'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
             np.save(f, self.error_list)
-        with open('data/error_list_sigma'+str(self.step_sizes)+'.npy', 'wb') as f:
+        with open('data/error_list_sigma'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
             np.save(f, self.error_list_sigma)
 
     def train_models(self):

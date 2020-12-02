@@ -12,8 +12,8 @@ import math
 import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
-from Exp_Bias import experiment_bias, experiment_bias2
-from Exp_IrreducibleError import experiment_irreducible_error
+from Exp_Bias import *
+from Exp_IrreducibleError import *
 from Exp_withError import experimentWithError
 from Experiment import experiment
 
@@ -22,54 +22,134 @@ from animate import animate
 if __name__ == "__main__":
     params = {
             #experiment configs
-            'num_runs': 1,
+            'num_runs': 30,
             'num_epochs': 500,
-            'num_data_points': 1000,
+            'num_data_points': 5000,
             'plt_show': True,
             'plt_save': False,
             'plot_show_epoch_freq': 10,
             
             #agents configs
-            'num_agents': 1,
-            'names': ['het'],
-            'hidden_layers_mu': [[]],
-            'hidden_layers_var':[[64, 64]],
+            'num_agents': 10,
+            'names': ['het']*10,
+            'hidden_layers_mu': [[]]*10,
+            'hidden_layers_var':[[]]*10,
             'data_dim':1,
-            'hidden_layers_error':[[]],
-            'batch_sizes': [8],
-            'step_sizes': [0.001],
-            'plot_colors': ['r'],
-            'loss_type': ['1'],
-            'bias_available':[True],
-            'mu_training':[False],
+            'hidden_layers_error':[[]]*10,
+            'batch_sizes': [16]*10,
+            'step_sizes': [2**-i for i in range(5, 15)],
+            'plot_colors': ['r']*10,
+            'loss_type': ['1']*10,
+            'bias_available':[True]*10,
+            'mu_training':[False]*10,
         }
 
-    exp_names = ["bias", "bias2", "irreducible_err"]
-
-    exp_name = exp_names[2]
-    # exp_bias = experiment_bias(params, exp_name)
-    # exp_bias.run_experiment()
-
-    # exp_bias2 = experiment_bias2(params)
-    # exp_bias2.run_experiment()
-
-    # exp_name = exp_names[2]
-    # exp_irriducible = experiment_irreducible_error(params, exp_name)
-    # exp_irriducible.run_experiment()
-
-    exp = experiment(params, exp_name)
+#  ******************          Fixed Mu Experiments !
+    exp_name = 'Irre_fixedMu_linearNoise'
+    exp = experiment_irreducible_error1(params, exp_name)
     exp.run_experiment()
+
+    exp_name = 'IrreBias_fixedMu_linearNoise_fixedBias'
+    exp = experiment_irreducible_error2(params, exp_name)
+    exp.run_experiment()
+
+    exp_name = 'Bias_fixedMu_linearBias'
+    exp = experiment_bias1(params, exp_name)
+    exp.run_experiment()
+
+# ********
+    # relu activation
+    exp_name = 'Irre_fixedMu_rangeUniformNoise'
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    exp = experiment_irreducible_error4(params, exp_name)
+    exp.run_experiment()
+
+    #relu activation
+    params['hidden_layers_var'] = [[64]]*10
+    exp_name = 'Bias_fixedMu_rangefixedBias'
+    exp = experiment_bias2(params, exp_name)
+    exp.run_experiment()
+
+    # tanh activation
+    params['hidden_layers_var'] = [[64, 64]]*10
+    exp_name = 'IrreBias_fixedMu_sinNoise_fixedBias'
+    exp = experiment_irreducible_error3(params, exp_name)
+    exp.run_experiment()
+
+
+#  ******************      Not Fixed Mu Experiments !
+# ********
+    #relu activation
+    params['hidden_layers_var'] = [[64]]*10
+    params['mu_training'] = [True]*10
+    exp_name = 'Bias_rangefixedBias'
+    exp = experiment_bias2(params, exp_name)
+    exp.run_experiment()
+
+    params['hidden_layers_var'] = [[64]] * 10
+    params['mu_training'] = [True] * 10
+    params['loss_type'] =  ['3']*10
+    exp_name = 'RegularReg_Bias_rangefixedBias'
+    exp = experiment_bias2(params, exp_name)
+    exp.run_experiment()
+
+# ********
+    # relu activation
+    exp_name = 'Irre_rangeUniformNoise'
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    params['mu_training'] = [True]*10
+    exp = experiment_irreducible_error4(params, exp_name)
+    exp.run_experiment()
+
+    exp_name = 'RegularReg_Irre_rangeUniformNoise'
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    params['mu_training'] = [True] * 10
+    params['loss_type'] = ['3']*10
+    exp = experiment_irreducible_error4(params, exp_name)
+    exp.run_experiment()
+
+# ********
+    # relu activation
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    params['mu_training'] = [True] * 10
+    params['loss_type'] =  ['1']*10
+
+    exp_name = 'Bias_quadraticBias1'
+    exp = experiment_bias3(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+
+    exp_name = 'Bias_quadraticBias2'
+    exp = experiment_bias3(params, exp_name)
+    exp.A = 0.5
+    exp.run_experiment()
+
+    exp_name = 'Bias_quadraticBias3'
+    exp = experiment_bias3(params, exp_name)
+    exp.A = 2**-4
+    exp.run_experiment()
+
+    params['hidden_layers_var'] = [[64, 64]] * 10
+    params['mu_training'] = [True] * 10
+    params['loss_type'] = ['3'] * 10
+
+    exp_name = 'RegularReg_Bias_quadraticBias1'
+    exp = experiment_bias3(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+
+    exp_name = 'RegularReg_Bias_quadraticBias2'
+    exp = experiment_bias3(params, exp_name)
+    exp.A = 0.5
+    exp.run_experiment()
+
+    exp_name = 'RegularReg_Bias_quadraticBias3'
+    exp = experiment_bias3(params, exp_name)
+    exp.A = 2 ** -4
+    exp.run_experiment()
+# ********
 
     # animate
     fp_in = "plots/" + exp_name + "/*.png"
     fp_out = "plots/" + exp_name + "/animate.gif"
     animate(fp_in, fp_out)
-
-    # mu, sigma = exp_irriducible.models[0].test_model(exp_irriducible.x, ty)
-    # # real_error = np.abs(exp.y - 2*exp.x)
-    # # print(sigma.shape, real_error.shape)
-    # # plt.plot(exp.x, real_error, label='real')
-    # plt.plot(exp_irriducible.x, sigma, label='pred')
-    # plt.legend()
-    # plt.show()
-    # print(exp_irriducible.x, sigma)
