@@ -17,7 +17,7 @@ class GeneralModel():
         self.step_size = params['step_size']
         self.name = params['name']
         self.bias_available = params['bias_available']
-
+        self.loss_type = params['loss_type']
         self.__create_networks()
 
     
@@ -31,7 +31,8 @@ class GeneralModel():
             mu, sigma = self.model(batch_x.float())
         return mu, sigma
 
-    def train_model(self, batch_x, batch_y, loss_type='1', batch_mu=None):#loss_type = '1', '2', '3'
+    def train_model(self, batch_x, batch_y, batch_mu=None):#loss_type = '1', '2', '3'
+        loss_type = self.loss_type
         x = torch.from_numpy(batch_x).float()
         y = torch.from_numpy(batch_y).float()
 

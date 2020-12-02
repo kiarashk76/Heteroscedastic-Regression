@@ -10,12 +10,12 @@ from Experiment import experiment
 class experiment_bias1(experiment):
     def create_dataset(self):
         # create the dataset
-        range_data_points = (0, 4)
+        range_data_points = (0, 10)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
         self.noise = np.zeros_like(x)
         for i in range(x.shape[0]):
-            self.noise[i] = np.random.normal(0.5*x[i], 0)
+            self.noise[i] = 5 * np.random.normal(0.5*x[i], 0)
         y = 2 * x + self.noise
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
@@ -41,7 +41,6 @@ class experiment_bias1(experiment):
                 mu = torch.from_numpy(self.mu).float()
             distance = torch.dist(torch.from_numpy(self.y).float(), mu)
             noise = (torch.from_numpy(self.y).float() - mu) ** 2
-
             sigma_distance = torch.dist(noise, var)
             self.error_list[run_number, epoch_number, a] = distance
             self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
@@ -158,11 +157,14 @@ class experiment_bias3(experiment):
 
     def create_dataset(self):
         # create the dataset
-        range_data_points = (0, 4)
+        range_data_points = (-2, 2)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
-        y = self.A*(x ** 2)
-        mu = self.A*(x ** 2)
+        self.noise = np.zeros_like(x)
+        for i in range(x.shape[0]):
+            self.noise[i] = np.random.normal(0, np.exp(- x[i]**2) )
+        y = self.A*(x ** 2) + self.noise
+        mu = self.A*(x ** 2) + self.noise
         self.x, self.y, self.mu = x, y, mu
 
     def train_models(self):
@@ -201,6 +203,8 @@ class experiment_bias3(experiment):
                     axs[0].plot(self.x, self.y, 'ko', markersize=0.5, label='ground truth', alpha=0.5)
                     axs[0].title.set_text(
                         'models after ' + str(epoch_number) + ' epochs in run number ' + str(run_number + 1))
+                    axs[0].set_ylim(-10,10)
+
                     axs[1].plot(self.x, noise, 'ko', markersize=0.5, label='ground truth',
                                 alpha=0.5)  # '''0.5* self.x'''
                     axs[1].title.set_text(
@@ -233,7 +237,7 @@ class experiment_bias4(experiment):
         self.noise = np.zeros_like(x)
         for i in range(x.shape[0]):
             if 2 < x[i] < 3:
-                self.noise[i] = 0.5 * x[i] + 1
+                self.noise[i] = x[i] + 1
         y = 2 * x + self.noise
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu

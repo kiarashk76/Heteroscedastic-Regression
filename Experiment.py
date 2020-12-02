@@ -28,6 +28,7 @@ class experiment():
         self.plot_colors = params['plot_colors']
         self.bias_available = params['bias_available']
         self.mu_training = params['mu_training']
+        self.loss_type = params['loss_type']
         self.experiment_name = experiment_name
 
         self.error_list = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
@@ -54,7 +55,8 @@ class experiment():
                       "batch_size": self.batch_sizes[i],
                       "step_size": self.step_sizes[i],
                       "name": self.names[i],
-                      "bias_available":self.bias_available[i]}
+                      "bias_available":self.bias_available[i],
+                      "loss_type":self.loss_type[i]}
             m = GeneralModel(params)
             self.models.append(m)
 
@@ -112,6 +114,11 @@ class experiment():
             plt.show()
             plt.close()
 
+        with open('data/datasetx'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
+            np.save(f, self.x)
+        with open('data/datasety'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
+            np.save(f, self.y)
+
         with open('data/learn_mu_'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
             np.save(f, self.learn_mu)
         with open('data/learn_var_'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
@@ -120,6 +127,7 @@ class experiment():
             np.save(f, self.error_list)
         with open('data/error_list_sigma'+self.experiment_name+str(self.step_sizes)+'.npy', 'wb') as f:
             np.save(f, self.error_list_sigma)
+
 
     def train_models(self):
         for a, model in enumerate(self.models):

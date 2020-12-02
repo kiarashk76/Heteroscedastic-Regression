@@ -160,7 +160,7 @@ class experiment_irreducible_error3(experiment):
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
         self.noise = np.zeros_like(x)
         for i in range(x.shape[0]):
-            self.noise[i] = np.random.normal(2, np.abs(np.sin(2*x[i])))
+            self.noise[i] = np.random.normal(1, np.abs(np.sin(2*x[i])))
         y = 2 * x + self.noise
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
