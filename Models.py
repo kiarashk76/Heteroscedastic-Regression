@@ -102,7 +102,7 @@ class StateTransitionModelSeparate(nn.Module):
         vl = copy.copy(x)
         for i, lay in enumerate(self.layers_list):
             layer = lay
-            l = torch.relu(layer(l))
+            l = torch.tanh(layer(l))
         for i, lay in enumerate(self.vlayers_list):
             vlayer = lay
             vl = torch.tanh(vlayer(vl))
