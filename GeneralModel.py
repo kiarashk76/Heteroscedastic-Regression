@@ -18,11 +18,15 @@ class GeneralModel():
         self.name = params['name']
         self.bias_available = params['bias_available']
         self.loss_type = params['loss_type']
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
         self.__create_networks()
 
     
     def __create_networks(self):
-        self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var, bias_available=self.bias_available)#, self.data_dim)
+
+        self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var,
+                                                  bias_available=self.bias_available).to(self.device)#, self.data_dim)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.step_size)
         # self.optimizer = optim.SGD(self.model.parameters(), lr=self.step_size)
 
@@ -33,8 +37,8 @@ class GeneralModel():
 
     def train_model(self, batch_x, batch_y, batch_mu=None):#loss_type = '1', '2', '3'
         loss_type = self.loss_type
-        x = torch.from_numpy(batch_x).float()
-        y = torch.from_numpy(batch_y).float()
+        x = torch.from_numpy(batch_x).float().to(self.device)
+        y = torch.from_numpy(batch_y).float().to(self.device)
 
         pred, var = self.model(x)
         assert pred.shape == x.shape, str(pred.shape) + str(var.shape) + str(x.shape)

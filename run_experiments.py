@@ -20,39 +20,40 @@ from Experiment import experiment
 from animate import animate
 
 if __name__ == "__main__":
-    aa = 1
+    num_agent = 1
+
     params = {
             #experiment configs
             'num_runs': 1,
             'num_epochs': 200,
-            'num_data_points': 5000,
+            'num_data_points': 2000,
             'plt_show': True,
             'plt_save': False,
-            'plot_show_epoch_freq': 40,
+            'plot_show_epoch_freq': 100,
             
             #agents configs
-            'num_agents': aa,
-            'names': ['het']*aa,
-            'hidden_layers_mu': [[]]*aa,
-            'hidden_layers_var':[[]]*aa,
+            'num_agents': num_agent,
+            'names': ['het'] * num_agent,
+            'hidden_layers_mu': [[]] * num_agent,
+            'hidden_layers_var': [[]] * num_agent,
             'data_dim':1,
-            'hidden_layers_error':[[]]*aa,
-            'batch_sizes': [16]*aa,
+            'hidden_layers_error': [[]] * num_agent,
+            'batch_sizes': [128] * num_agent,
             'step_sizes': [0.01],#[2**-i for i in range(5, 15)],
-            'plot_colors': ['r']*aa,
-            'loss_type': ['1']*aa,
-            'bias_available':[True]*aa,
-            'mu_training':[False]*aa,
+            'plot_colors': ['r'] * num_agent,
+            'loss_type': ['1'] * num_agent,
+            'bias_available': [True] * num_agent,
+            'mu_training': [False] * num_agent,
         }
 
 #  ******************          Fixed Mu Experiments !
-    params['mu_training'] = [False] * 10
-    params['hidden_layers_var'] = [[]] * 10
-    params['loss_type'] = ['1'] * 10
+    params['mu_training'] = [False] * num_agent
+    params['hidden_layers_var'] = [[]] * num_agent
+    params['loss_type'] = ['1'] * num_agent
 
     exp_name = 'Irre_fixedMu_linearNoise'
     exp = experiment_irreducible_error1(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     exp_name = 'IrreBias_fixedMu_linearNoise_fixedBias'
     exp = experiment_irreducible_error2(params, exp_name)
@@ -209,9 +210,15 @@ if __name__ == "__main__":
     # exp.run_experiment()
 
 # **********
-    exp_name = 'HetFail1_Irre_Uniform'
+    params['batch_sizes'] = [128]*10
+    params['hidden_layers_mu'] = [[32,32]] * 10
+    params['hidden_layers_var'] =  [[]] * 10
+    params['loss_type'] =  ['1'] * 10
+    exp_name = 'HetFail1_Irre_rangeUniformNoise1'
     exp = experiment_irreducible_error6(params, exp_name)
-    exp.run_experiment()
+    # exp.run_experiment()
+
+
     # animate
     fp_in = "plots/" + exp_name + "/*.png"
     fp_out = "plots/" + exp_name + "/animate.gif"
