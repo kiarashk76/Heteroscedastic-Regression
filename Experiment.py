@@ -7,6 +7,7 @@ import torch.nn.functional as F
 from GeneralModel import GeneralModel
 from time import time
 import pickle
+from tqdm import tqdm
 
 class experiment():
     def __init__(self, params, experiment_name):
@@ -63,9 +64,9 @@ class experiment():
             self.models.append(m)
 
     def run_experiment(self):
-        for r in range(self.num_runs):
+        for r in tqdm(range(self.num_runs)):
             np.random.seed(r)
-            print('\n run number: ', r+1)
+            # print('\n run number: ', r+1)
 
             self.create_dataset()
             self.init_models()
