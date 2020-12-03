@@ -19,17 +19,6 @@ class experiment_irreducible_error1(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
-
     def validate_models(self, run_number, epoch_number):
         # validate models
         ground_truth = False
@@ -92,17 +81,6 @@ class experiment_irreducible_error2(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
-
     def validate_models(self, run_number, epoch_number):
         # validate models
         ground_truth = False
@@ -164,17 +142,6 @@ class experiment_irreducible_error3(experiment):
         y = 2 * x + self.noise
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
-
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models
@@ -239,17 +206,6 @@ class experiment_irreducible_error4(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
-
     def validate_models(self, run_number, epoch_number):
         # validate models
         ground_truth = False
@@ -307,23 +263,17 @@ class experiment_irreducible_error5(experiment):
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
         self.noise = np.zeros_like(x)
+        y = np.zeros_like(x)
         for i in range(x.shape[0]):
-            if 2 < x[i] < 3:
-                self.noise[i] = np.random.uniform(0, 3)
-        y = np.sin(3 * x) + self.noise
+            if 2 < x[i] < 4:
+                self.noise[i] = np.random.uniform(-1, 1)
+            if 0 <= x[i] <= 4:
+                y[i] += np.sin(5*x[i]) + 2
+            # if 0 <= x[i] <=2:
+            #     y[i] += x[i]
+        y += self.noise
         mu = np.sin(x)
         self.x, self.y, self.mu = x, y, mu
-
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models
@@ -350,6 +300,7 @@ class experiment_irreducible_error5(experiment):
                     axs[0].plot(self.x, self.y, 'ko', markersize=0.5, label='ground truth', alpha=0.5)
                     axs[0].title.set_text(
                         'models after ' + str(epoch_number) + ' epochs in run number ' + str(run_number + 1))
+                    axs[0].set_ylim(-2,6)
                     axs[1].plot(self.x, noise, 'ko', markersize=0.5, label='ground truth',
                                 alpha=0.5)  # '''0.5* self.x'''
                     axs[1].title.set_text(
@@ -390,17 +341,6 @@ class experiment_irreducible_error6(experiment):
         y = np.ones_like(x) + self.noise
         mu = np.ones_like(x)
         self.x, self.y, self.mu = x, y, mu
-
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models

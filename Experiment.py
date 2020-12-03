@@ -128,8 +128,11 @@ class experiment():
 
     def train_models(self):
         for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
+            mask = list(range(self.num_data_points))
+            np.random.shuffle(mask)
+            for i in range(self.num_data_points // self.batch_sizes[a]):
+                # ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
+                ind = mask[i*self.batch_sizes[a]:(i+1)*self.batch_sizes[a]]
                 batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
                 # give batch_mu so mu not being learned
                 if self.mu_training[a]:

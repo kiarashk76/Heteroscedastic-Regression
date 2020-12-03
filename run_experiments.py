@@ -24,29 +24,29 @@ if __name__ == "__main__":
     params = {
             #experiment configs
             'num_runs': 1,
-            'num_epochs': 200,
-            'num_data_points': 1000,
+            'num_epochs': 800,
+            'num_data_points': 1024,
             'plt_show': True,
             'plt_save': False,
-            'plot_show_epoch_freq': 20,
+            'plot_show_epoch_freq': 40,
             
             #agents configs
             'num_agents': aa,
             'names': ['het']*aa,
-            'hidden_layers_mu': [[]]*aa,
-            'hidden_layers_var':[[64,64]]*aa,
+            'hidden_layers_mu': [[16,16]]*aa,
+            'hidden_layers_var':[[]]*aa,
             'data_dim':1,
             'hidden_layers_error':[[]]*aa,
-            'batch_sizes': [16]*aa,
-            'step_sizes': [0.001],#[2**-i for i in range(5, 15)],
+            'batch_sizes': [128]*aa,
+            'step_sizes': [0.01],#[2**-i for i in range(5, 15)],
             'plot_colors': ['r']*aa,
-            'loss_type': ['1']*aa,
+            'loss_type': ['3']*aa,
             'bias_available':[True]*aa,
             'mu_training':[True]*aa,
         }
 
     exp_name = 'test'
-    exp = experiment_irreducible_error6(params, exp_name)
+    exp = experiment_irreducible_error5(params, exp_name)
     exp.run_experiment()
 #  ******************          Fixed Mu Experiments !
     params['mu_training'] = [False] * 10

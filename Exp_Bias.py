@@ -20,16 +20,6 @@ class experiment_bias1(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models
@@ -92,16 +82,6 @@ class experiment_bias2(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models
@@ -164,17 +144,6 @@ class experiment_bias3(experiment):
         y = self.A*(x ** 2)
         mu = self.A*(x ** 2)
         self.x, self.y, self.mu = x, y, mu
-
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models
@@ -239,17 +208,6 @@ class experiment_bias4(experiment):
         y = 2 * x + self.noise
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
-
-    def train_models(self):
-        for a, model in enumerate(self.models):
-            for _ in range(self.num_data_points // self.batch_sizes[a]):
-                ind = np.random.choice(self.num_data_points, self.batch_sizes[a])
-                batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
-                # give batch_mu so mu not being learned
-                if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
-                else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
 
     def validate_models(self, run_number, epoch_number):
         # validate models
