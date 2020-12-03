@@ -17,7 +17,9 @@ class experiment_irreducible_error1(experiment):
             self.noise[i] = np.random.normal(0, 0.5*x[i])
         y = 2 * x + self.noise
         mu = 2 * x
-        self.x, self.y, self.mu = x, y, mu
+        self.x, self.y, self.mu = torch.from_numpy(x).to(self.device), \
+                                  torch.from_numpy(y).to(self.device), \
+                                  torch.from_numpy(mu).to(self.device)
 
 
 

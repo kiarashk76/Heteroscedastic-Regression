@@ -47,7 +47,7 @@ class experiment():
         x = np.reshape(np.sort(x), (self.num_data_points, self.data_dim))
         y = x + np.sin(4 * x) + np.sin(13 * x)
         mu = x + np.sin(4 * x) + np.sin(13 * x)
-        self.x, self.y, self.mu = x.to(self.device), y.to(self.device), mu.to(self.device)
+        self.x, self.y, self.mu = x, y, mu
 
     def init_models(self):
         #initializing the models
