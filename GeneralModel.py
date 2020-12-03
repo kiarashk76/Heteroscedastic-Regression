@@ -18,7 +18,7 @@ class GeneralModel():
         self.name = params['name']
         self.bias_available = params['bias_available']
         self.loss_type = params['loss_type']
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.device = params['device']
 
         self.__create_networks()
 
