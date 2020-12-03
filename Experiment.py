@@ -71,7 +71,7 @@ class experiment():
             self.create_dataset()
             self.init_models()
             #train
-            for e in range(self.num_epochs):
+            for e in tqdm(range(self.num_epochs)):
                 # train models
                 self.train_models()
                 self.validate_models(r, e)
