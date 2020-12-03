@@ -11,6 +11,7 @@ import pickle
 class experiment():
     def __init__(self, params, experiment_name):
         #experiment configs
+        self.parameters = params
         self.num_runs = params['num_runs']
         self.num_epochs = params['num_epochs']
         self.num_data_points = params['num_data_points']
@@ -122,7 +123,8 @@ class experiment():
                 'learn_mu': self.learn_mu,
                 'learn_var': self.learn_var,
                 'mu_error_list': self.error_list,
-                'sigma_error_list': self.error_list_sigma
+                'sigma_error_list': self.error_list_sigma,
+                'params': self.parameters
             }
             pickle.dump(data, f)
 

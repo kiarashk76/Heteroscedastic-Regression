@@ -24,8 +24,8 @@ if __name__ == "__main__":
     params = {
             #experiment configs
             'num_runs': 1,
-            'num_epochs': 800,
-            'num_data_points': 1024,
+            'num_epochs': 200,
+            'num_data_points': 5000,
             'plt_show': True,
             'plt_save': False,
             'plot_show_epoch_freq': 40,
@@ -33,21 +33,18 @@ if __name__ == "__main__":
             #agents configs
             'num_agents': aa,
             'names': ['het']*aa,
-            'hidden_layers_mu': [[16,16]]*aa,
+            'hidden_layers_mu': [[]]*aa,
             'hidden_layers_var':[[]]*aa,
             'data_dim':1,
             'hidden_layers_error':[[]]*aa,
-            'batch_sizes': [128]*aa,
+            'batch_sizes': [16]*aa,
             'step_sizes': [0.01],#[2**-i for i in range(5, 15)],
             'plot_colors': ['r']*aa,
-            'loss_type': ['3']*aa,
+            'loss_type': ['1']*aa,
             'bias_available':[True]*aa,
-            'mu_training':[True]*aa,
+            'mu_training':[False]*aa,
         }
 
-    exp_name = 'test'
-    exp = experiment_irreducible_error5(params, exp_name)
-    exp.run_experiment()
 #  ******************          Fixed Mu Experiments !
     params['mu_training'] = [False] * 10
     params['hidden_layers_var'] = [[]] * 10
@@ -211,6 +208,10 @@ if __name__ == "__main__":
     exp.A = 2 ** -4
     # exp.run_experiment()
 
+# **********
+    exp_name = 'HetFail1_Irre_Uniform'
+    exp = experiment_irreducible_error6(params, exp_name)
+    exp.run_experiment()
     # animate
     fp_in = "plots/" + exp_name + "/*.png"
     fp_out = "plots/" + exp_name + "/animate.gif"
