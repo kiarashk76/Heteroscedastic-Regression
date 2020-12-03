@@ -39,7 +39,7 @@ if __name__ == "__main__":
             'data_dim':1,
             'hidden_layers_error': [[]] * num_agent,
             'batch_sizes': [128] * num_agent,
-            'step_sizes': [2**-i for i in range(5, 15)],
+            'step_sizes': [2**-i for i in range(5, 16, 2)],
             'plot_colors': ['r'] * num_agent,
             'loss_type': ['1'] * num_agent,
             'bias_available': [True] * num_agent,
