@@ -55,7 +55,7 @@ class GeneralModel():
             elif loss_type == '3':
                 loss = torch.mean((pred - y) ** 2)
         else:
-            mu = torch.from_numpy(batch_mu).float()
+            mu = torch.from_numpy(batch_mu).float().to(self.device)
             if loss_type == '1':
                 loss = torch.mean(((mu - y) ** 2) / (2 * var) + 0.5 * torch.log(var))
             else:
