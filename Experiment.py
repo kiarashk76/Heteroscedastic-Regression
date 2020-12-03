@@ -11,8 +11,6 @@ import pickle
 class experiment():
     def __init__(self, params, experiment_name):
         #experiment configs
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
         self.parameters = params
         self.num_runs = params['num_runs']
         self.num_epochs = params['num_epochs']
@@ -60,8 +58,7 @@ class experiment():
                       "step_size": self.step_sizes[i],
                       "name": self.names[i],
                       "bias_available":self.bias_available[i],
-                      "loss_type":self.loss_type[i],
-                      "device":self.device}
+                      "loss_type":self.loss_type[i]}
             m = GeneralModel(params)
             self.models.append(m)
 
