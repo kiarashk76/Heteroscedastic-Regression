@@ -8,6 +8,7 @@ from GeneralModel import GeneralModel
 from time import time
 import pickle
 from tqdm import tqdm
+import sys
 
 class experiment():
     def __init__(self, params, experiment_name):
@@ -32,12 +33,15 @@ class experiment():
         self.bias_available = params['bias_available']
         self.mu_training = params['mu_training']
         self.loss_type = params['loss_type']
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
         self.experiment_name = experiment_name
 
         self.error_list = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
         self.error_list_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
         self.learn_mu = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
         self.learn_var = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
+
     def create_dataset(self):
         # create the dataset
         range_data_points = (-1, 2)
@@ -64,11 +68,12 @@ class experiment():
             self.models.append(m)
 
     def run_experiment(self):
+        np.random.seed(0)
+        self.create_dataset()
         for r in tqdm(range(self.num_runs)):
             np.random.seed(r)
             # print('\n run number: ', r+1)
 
-            self.create_dataset()
             self.init_models()
             #train
             for e in tqdm(range(self.num_epochs)):
@@ -119,10 +124,12 @@ class experiment():
 
         with open('data/'+self.experiment_name+'.p', 'wb') as f:
             data = {
-                'x': self.x,
-                'y': self.y,
-                'learn_mu': self.learn_mu,
-                'learn_var': self.learn_var,
+                # 'x': self.x,
+                # 'y': self.y,
+                'avg_learn_mu': np.mean(self.learn_mu, axis=0),
+                'avg_learn_var': np.mean(self.learn_var, axis=0),
+                'last_mu':self.learn_mu[:,-10:-1],
+                'last_var': self.learn_var[:, -10:-1],
                 'mu_error_list': self.error_list,
                 'sigma_error_list': self.error_list_sigma,
                 'params': self.parameters
@@ -180,12 +187,12 @@ class experiment():
             mu, var = model.test_model(self.x, self.y)
             if not self.mu_training[a]:
                 mu = torch.from_numpy(self.mu).float()
-            # distance = torch.dist(torch.from_numpy(self.y).float(), mu)
-            # noise = (torch.from_numpy(self.y).float() - mu) ** 2
+            distance = torch.dist(torch.from_numpy(self.y).float(), mu)
+            noise = (torch.from_numpy(self.y).float() - mu) ** 2
 
-            # sigma_distance = torch.dist(noise, var)
-            # self.error_list[run_number, epoch_number, a] = distance
-            # self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
+            sigma_distance = torch.dist(noise, var)
+            self.error_list[run_number, epoch_number, a] = distance
+            self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
             self.learn_mu[run_number, epoch_number, a] = mu.to(torch.device("cpu"))
             self.learn_var[run_number, epoch_number, a] = var.to(torch.device("cpu"))
             # draw plot till now
