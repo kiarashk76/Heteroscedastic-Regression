@@ -26,6 +26,10 @@ class GeneralModel():
 
         self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var,
                                                   bias_available=self.bias_available)#, self.data_dim)
+        # self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cpu")
+        # print(self.device)
+        self.model.to(self.device)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.step_size)
         # self.optimizer = optim.SGD(self.model.parameters(), lr=self.step_size)
 
@@ -36,8 +40,8 @@ class GeneralModel():
 
     def train_model(self, batch_x, batch_y, batch_mu=None):#loss_type = '1', '2', '3'
         loss_type = self.loss_type
-        x = torch.from_numpy(batch_x).float()
-        y = torch.from_numpy(batch_y).float()
+        x = torch.from_numpy(batch_x).float().to(self.device)
+        y = torch.from_numpy(batch_y).float().to(self.device)
 
         pred, var = self.model(x)
         assert pred.shape == x.shape, str(pred.shape) + str(var.shape) + str(x.shape)
@@ -72,8 +76,8 @@ class GeneralModel():
 
         
     def test_model(self, batch_x, batch_y):
-        x = torch.from_numpy(batch_x).float()
-        y = torch.from_numpy(batch_y).float()
+        x = torch.from_numpy(batch_x).float().to(self.device)
+        y = torch.from_numpy(batch_y).float().to(self.device)
         mu, sigma = self.__model_output(x)
         # trace = torch.diagonal(sigma, dim1=1, dim2=2).sum(-1)
         return mu, sigma

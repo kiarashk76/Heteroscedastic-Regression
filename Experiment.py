@@ -180,14 +180,14 @@ class experiment():
             mu, var = model.test_model(self.x, self.y)
             if not self.mu_training[a]:
                 mu = torch.from_numpy(self.mu).float()
-            distance = torch.dist(torch.from_numpy(self.y).float(), mu)
-            noise = (torch.from_numpy(self.y).float() - mu) ** 2
+            # distance = torch.dist(torch.from_numpy(self.y).float(), mu)
+            # noise = (torch.from_numpy(self.y).float() - mu) ** 2
 
-            sigma_distance = torch.dist(noise, var)
-            self.error_list[run_number, epoch_number, a] = distance
-            self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
-            self.learn_mu[run_number, epoch_number, a] = mu
-            self.learn_var[run_number, epoch_number, a] = var
+            # sigma_distance = torch.dist(noise, var)
+            # self.error_list[run_number, epoch_number, a] = distance
+            # self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
+            self.learn_mu[run_number, epoch_number, a] = mu.to(torch.device("cpu"))
+            self.learn_var[run_number, epoch_number, a] = var.to(torch.device("cpu"))
             # draw plot till now
             if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
                 # mu, var = model.test_model(x, y)

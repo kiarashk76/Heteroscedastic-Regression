@@ -20,8 +20,7 @@ from Experiment import experiment
 from animate import animate
 
 if __name__ == "__main__":
-    num_agent = 10
-
+    num_agent = 6
     params = {
             #experiment configs
             'num_runs': 30,
@@ -228,7 +227,7 @@ if __name__ == "__main__":
     params['hidden_layers_mu'] = [[16, 16]] * 10
     exp_name = 'HetFail1_Irre_rangeUniformNoise3'
     exp = experiment_irreducible_error5(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     params['hidden_layers_mu'] = [[12, 12]] * 10
     exp_name = 'HetFail1_Irre_rangeUniformNoise4'
