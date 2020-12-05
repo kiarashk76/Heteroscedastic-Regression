@@ -41,7 +41,16 @@ class experiment():
         self.error_list_sigma = np.zeros([self.num_runs, self.num_epochs, self.num_agents])
         self.learn_mu = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
         self.learn_var = np.zeros([self.num_runs, self.num_epochs, self.num_agents, self.num_data_points, self.data_dim])
-
+        # print(
+        # sys.getsizeof(np.std(self.learn_mu, axis=0))+
+        # sys.getsizeof(np.std(self.learn_var, axis=0))+
+        # sys.getsizeof(np.mean(self.learn_mu, axis=0))+
+        # sys.getsizeof(np.mean(self.learn_var, axis=0))+
+        # sys.getsizeof(self.learn_mu[:, -10:-1])+
+        # sys.getsizeof(self.learn_var[:, -10:-1])+
+        # sys.getsizeof(self.error_list)+
+        # sys.getsizeof(self.error_list_sigma)+
+        # sys.getsizeof(self.parameters))
     def create_dataset(self):
         # create the dataset
         range_data_points = (-1, 2)
@@ -126,6 +135,8 @@ class experiment():
             data = {
                 # 'x': self.x,
                 # 'y': self.y,
+                'std_learn_mu': np.std(self.learn_mu, axis=0),
+                'std_learn_var': np.std(self.learn_var, axis=0),
                 'avg_learn_mu': np.mean(self.learn_mu, axis=0),
                 'avg_learn_var': np.mean(self.learn_var, axis=0),
                 'last_mu':self.learn_mu[:,-10:-1],
