@@ -79,7 +79,7 @@ class experiment_irreducible_error5(experiment):
             # if 0 <= x[i] <=2:
             #     y[i] += x[i]
         y += self.noise
-        mu = np.sin(x)
+        mu = np.sin(5*x) + 2
         self.x, self.y, self.mu = x, y, mu
 
 class experiment_irreducible_error6(experiment):

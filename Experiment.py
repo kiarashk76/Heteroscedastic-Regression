@@ -135,8 +135,6 @@ class experiment():
             data = {
                 # 'x': self.x,
                 # 'y': self.y,
-                'std_learn_mu': np.std(self.learn_mu, axis=0),
-                'std_learn_var': np.std(self.learn_var, axis=0),
                 'avg_learn_mu': np.mean(self.learn_mu, axis=0),
                 'avg_learn_var': np.mean(self.learn_var, axis=0),
                 'last_mu':self.learn_mu[:,-10:-1],

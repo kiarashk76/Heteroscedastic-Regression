@@ -83,5 +83,5 @@ class experiment_bias5(experiment):
         for i in range(x.shape[0]):
             self.noise[i] = np.random.normal(0, np.exp(- x[i]**2) )
         y = self.A*(x ** 2) + self.noise
-        mu = self.A*(x ** 2) + self.noise
+        mu = self.A*(x ** 2)
         self.x, self.y, self.mu = x, y, mu
