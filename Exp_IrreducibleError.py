@@ -73,7 +73,7 @@ class experiment_irreducible_error5(experiment):
         y = np.zeros_like(x)
         for i in range(x.shape[0]):
             if 2 < x[i] < 4:
-                self.noise[i] = np.random.uniform(-1, 1)
+                self.noise[i] = np.random.uniform(0, np.sin(2*np.pi*x[i]))
             if 0 <= x[i] <= 4:
                 y[i] += np.sin(5*x[i]) + 2
             # if 0 <= x[i] <=2:
@@ -98,4 +98,37 @@ class experiment_irreducible_error6(experiment):
 
         y = np.ones_like(x) + self.noise
         mu = np.ones_like(x)
+        self.x, self.y, self.mu = x, y, mu
+
+class experiment_irreducible_error7(experiment):
+    def create_dataset(self):
+        # create the dataset
+        range_data_points = (0, 2)
+        x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
+        x = np.reshape(np.sort(x), (self.num_data_points, 1))
+        self.noise = np.zeros_like(x)
+        np.random.seed(0)
+        for i in range(x.shape[0]):
+            # if 0<x[i]<1:
+            #     self.noise[i] = np.random.normal(0, 10)
+            self.noise[i] = np.random.normal(0, (10*(np.exp(-((2.5*x[i]-0.5)**2+1)))))
+        y = 2 * x + self.noise
+        mu = 2 * x
+        self.x, self.y, self.mu = x, y, mu
+
+class experiment_irreducible_error8(experiment):
+    def create_dataset(self):
+        # create the dataset
+        range_data_points = (0, 4*np.pi)
+        x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
+        x = np.reshape(np.sort(x), (self.num_data_points, 1))
+        self.noise = np.zeros_like(x)
+        np.random.seed(0)
+        for i in range(x.shape[0]):
+
+            self.noise[i] = np.random.normal(0, (10*(np.exp(-((2.5*(x[i]-2*np.pi))**2+1)))))
+            # self.noise[i] += np.random.uniform(-0.5, 0.5)
+        y = np.sin(x) + self.noise
+        # y = x * np.sin(5*x) + np.sin(13*x)
+        mu = np.sin(x) + self.noise
         self.x, self.y, self.mu = x, y, mu

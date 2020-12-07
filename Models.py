@@ -108,7 +108,7 @@ class StateTransitionModelSeparate(nn.Module):
             vl = torch.tanh(vlayer(vl))
         mu = self.mu(l)
         var = F.softplus(self.var(vl)) + 10**-6
-
+        # var = torch.relu(self.var(vl)) + 0.1
         return mu, var
 
 
