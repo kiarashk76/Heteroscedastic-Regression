@@ -45,7 +45,7 @@ class experiment_bias3(experiment):
 
     def create_dataset(self):
         # create the dataset
-        range_data_points = (-2, 2)
+        range_data_points = (-4, 4)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points*1), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, 1))
 

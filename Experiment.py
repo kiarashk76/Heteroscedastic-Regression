@@ -133,8 +133,8 @@ class experiment():
 
         with open('data/'+self.experiment_name+'.p', 'wb') as f:
             data = {
-                # 'x': self.x,
-                # 'y': self.y,
+                'x': self.x,
+                'y': self.y,
                 'avg_learn_mu': np.mean(self.learn_mu, axis=0),
                 'avg_learn_var': np.mean(self.learn_var, axis=0),
                 'last_mu':self.learn_mu[:,-10:-1],
@@ -218,7 +218,10 @@ class experiment():
                     axs[1].title.set_text(
                         'sigma after ' + str(epoch_number) + ' epochs in run number ' + str(run_number + 1))
 
-                self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], var[:, 0], 'model ' + model.name,
+                # self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], var[:, 0], 'model ' + model.name,
+                #                          self.plot_colors[a],
+                #                          axs[0])
+                self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], torch.from_numpy(np.zeros_like(mu[:, 0])) , 'model ' + model.name,
                                          self.plot_colors[a],
                                          axs[0])
                 axs[1].plot(self.x[:, 0], var[:, 0])
