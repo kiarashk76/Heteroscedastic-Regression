@@ -46,19 +46,8 @@ if __name__ == "__main__":
             'mu_training': [True] * num_agent,
         }
 
-    # params['hidden_layers_var'] = [[64, 64]] * num_agent
-    # params['hidden_layers_mu'] = [[512, 256, 64, 64]] * num_agent
-    # params['loss_type'] = ['1'] * num_agent
-    # exp_name = 'test'
-    # exp = experiment_irreducible_error7(params, exp_name)
-    # # exp.run_experiment()
-    #
-    # params['hidden_layers_var'] = [[64, 64]] * num_agent
-    # params['hidden_layers_mu'] = [[512, 256, 64, 64]] * num_agent
-    # params['loss_type'] = ['3'] * num_agent
-    # exp_name = 'test'
-    # exp = experiment_irreducible_error7(params, exp_name)
-    # # exp.run_experiment()
+
+
 #  ******************          Fixed Mu Experiments !
     params['mu_training'] = [False] * num_agent
     params['hidden_layers_var'] = [[]] * num_agent
@@ -242,7 +231,7 @@ if __name__ == "__main__":
     params['hidden_layers_var'] = [[64,64]] * 10
     exp_name = 'HetFail1_Irre_rangeUniformNoise3'
     exp = experiment_irreducible_error5(params, exp_name)
-    exp.run_experiment()
+    # exp.run_experiment()
 
     params['hidden_layers_mu'] = [[12, 12]] * 10
     exp_name = 'HetFail1_Irre_rangeUniformNoise4'
@@ -272,7 +261,7 @@ if __name__ == "__main__":
     params['hidden_layers_var'] = [[16,16]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise3'
     exp = experiment_irreducible_error5(params, exp_name)
-    exp.run_experiment()
+    # exp.run_experiment()
 
     params['hidden_layers_mu'] = [[12, 12]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise4'

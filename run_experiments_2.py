@@ -21,7 +21,7 @@ from Experiment import experiment
 from animate import animate
 
 if __name__ == "__main__":
-    num_agent = 1
+    num_agent = 6
 
     params = {
         # experiment configs
@@ -40,18 +40,13 @@ if __name__ == "__main__":
         'data_dim': 1,
         'hidden_layers_error': [[]] * num_agent,
         'batch_sizes': [128] * num_agent,
-        'step_sizes': [0.001],  # [2**-i for i in range(5, 16, 2)],
+        'step_sizes': [2**-i for i in range(5, 16, 2)],
         'plot_colors': ['r'] * num_agent,
         'loss_type': ['1'] * num_agent,
         'bias_available': [True] * num_agent,
         'mu_training': [True] * num_agent,
     }
 
-    params['mu_training'] = [True] * num_agent
-    params['hidden_layers_var'] = [[]] * num_agent
-    params['loss_type'] = ['3'] * num_agent
-
-    # ********
     # relu activation
     params['hidden_layers_var'] = [[64, 64]] * 10
     params['loss_type'] = ['1'] * 10
@@ -59,7 +54,7 @@ if __name__ == "__main__":
     exp_name = 'Bias_quadraticBias'
     exp = experiment_bias3(params, exp_name)
     exp.A = 0.5
-    exp.run_experiment()
+    # exp.run_experiment()
 
     params['hidden_layers_var'] = [[64, 64]] * 10
     params['loss_type'] = ['3'] * 10
@@ -67,7 +62,20 @@ if __name__ == "__main__":
     exp_name = 'RegularReg_Bias_quadraticBias'
     exp = experiment_bias3(params, exp_name)
     exp.A = 0.5
+    # exp.run_experiment()
+
+    #**************
+    params['hidden_layers_var'] = [[]] * num_agent
+    params['hidden_layers_mu'] = [[]] * num_agent
+
+    params['loss_type'] = ['1'] * num_agent
+
+    exp_name = 'Irre_linearNoise'
+    exp = experiment_irreducible_error1(params, exp_name)
     exp.run_experiment()
 
+    params['loss_type'] = ['3'] * num_agent
 
-
+    exp_name = 'RegularReg_Irre_linearNoise'
+    exp = experiment_irreducible_error1(params, exp_name)
+    exp.run_experiment()

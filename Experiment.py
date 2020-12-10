@@ -218,12 +218,12 @@ class experiment():
                     axs[1].title.set_text(
                         'sigma after ' + str(epoch_number) + ' epochs in run number ' + str(run_number + 1))
 
-                # self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], var[:, 0], 'model ' + model.name,
-                #                          self.plot_colors[a],
-                #                          axs[0])
-                self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], torch.from_numpy(np.zeros_like(mu[:, 0])) , 'model ' + model.name,
+                self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], var[:, 0], 'model ' + model.name,
                                          self.plot_colors[a],
                                          axs[0])
+                # self.drawPlotUncertainty(self.x[:, 0], mu[:, 0], torch.from_numpy(np.zeros_like(mu[:, 0])) , 'model ' + model.name,
+                #                          self.plot_colors[a],
+                #                          axs[0])
                 axs[1].plot(self.x[:, 0], var[:, 0])
 
         if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
