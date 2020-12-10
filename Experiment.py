@@ -96,10 +96,11 @@ class experiment():
             err_bar = np.std(self.error_list, axis=0)[:, i]
             self.drawPlotUncertainty(range(len(err)), err, err_bar, 'model '+ self.models[i].name, self.plot_colors[i])
         if self.plt_show:
-            plt.title("error plot over all the runs")
-            plt.legend()
-            plt.show()
-            plt.close()
+            pass
+            # plt.title("error plot over all the runs")
+            # plt.legend()
+            # plt.show()
+            # plt.close()
         if self.plt_save:
             plt.title("error plot over all the runs")
             plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
@@ -111,10 +112,11 @@ class experiment():
             self.drawPlotUncertainty(range(len(err)), err, err_bar, 'model ' + self.models[i].name,
                                      self.plot_colors[i])
         if self.plt_show:
-            plt.title("error plot over all the runs for sigma")
-            plt.legend()
-            plt.show()
-            plt.close()
+            pass
+            # plt.title("error plot over all the runs for sigma")
+            # plt.legend()
+            # plt.show()
+            # plt.close()
         if self.plt_save:
             plt.title("error plot over all the runs for sigma")
             plt.savefig('plots/' + self.experiment_name + '@' + str(time()) + '.png')
@@ -126,12 +128,13 @@ class experiment():
             plt.plot(average_learn_var[-1], label='var')
 
         if self.plt_show:
-            plt.title("average learning curve")
-            plt.legend()
-            plt.show()
-            plt.close()
+            pass
+            # plt.title("average learning curve")
+            # plt.legend()
+            # plt.show()
+            # plt.close()
 
-        with open('data/'+self.experiment_name+'.p', 'wb') as f:
+        with open('data/'+self.experiment_name+'AAA.p', 'wb') as f:
             data = {
                 'x': self.x,
                 'y': self.y,

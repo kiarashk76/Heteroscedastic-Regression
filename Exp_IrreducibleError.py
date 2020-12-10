@@ -145,3 +145,19 @@ class experiment_irreducible_error9(experiment):
         y = np.sin(2*x) + self.noise
         mu = np.sin(2*x)
         self.x, self.y, self.mu = x, y, mu
+
+
+class experiment_irreducible_error10(experiment):
+    def create_dataset(self):
+        # create the dataset
+        range_data_points = (0, 6)
+        x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], self.num_data_points * 1), 3)
+        x = np.reshape(np.sort(x), (self.num_data_points, 1))
+        self.noise = np.zeros_like(x)
+        y = np.zeros_like(x)
+        for i in range(x.shape[0]):
+            if 2 < x[i] < 4:
+                self.noise[i] = np.random.uniform(-2, 2)
+        y += np.sin(5 * x) + 2 + self.noise
+        mu = np.sin(5 * x) + 2
+        self.x, self.y, self.mu = x, y, mu

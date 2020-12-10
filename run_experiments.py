@@ -25,7 +25,7 @@ if __name__ == "__main__":
     params = {
             #experiment configs
             'num_runs': 1,
-            'num_epochs': 1000,
+            'num_epochs': 801,
             'num_data_points':2000,
             'plt_show': True,
             'plt_save': False,
@@ -39,12 +39,14 @@ if __name__ == "__main__":
             'data_dim':1,
             'hidden_layers_error': [[]] * num_agent,
             'batch_sizes': [128] * num_agent,
-            'step_sizes': [0.001],#[2**-i for i in range(5, 16, 2)],
-            'plot_colors': ['r'] * num_agent,
+            'step_sizes': [2**-9],#[2**-i for i in range(5, 16, 2)],
+            'plot_colors': ['b'] * num_agent,
             'loss_type': ['1'] * num_agent,
             'bias_available': [True] * num_agent,
             'mu_training': [True] * num_agent,
         }
+
+
 
 
 
@@ -228,7 +230,6 @@ if __name__ == "__main__":
 
 
     params['hidden_layers_mu'] = [[16, 16]] * 10
-    params['hidden_layers_var'] = [[64,64]] * 10
     exp_name = 'HetFail1_Irre_rangeUniformNoise3'
     exp = experiment_irreducible_error5(params, exp_name)
     # exp.run_experiment()
@@ -239,6 +240,8 @@ if __name__ == "__main__":
     # exp.run_experiment()
 
     params['hidden_layers_mu'] = [[8, 8]] * 10
+    params['hidden_layers_var'] = [[]] * 10
+
     exp_name = 'HetFail1_Irre_rangeUniformNoise5'
     exp = experiment_irreducible_error5(params, exp_name)
     # exp.run_experiment()
@@ -258,7 +261,6 @@ if __name__ == "__main__":
 
 
     params['hidden_layers_mu'] = [[16, 16]] * 10
-    params['hidden_layers_var'] = [[16,16]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise3'
     exp = experiment_irreducible_error5(params, exp_name)
     # exp.run_experiment()
