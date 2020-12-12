@@ -156,7 +156,7 @@ class experiment_irreducible_error10(experiment):
         self.noise = np.zeros_like(x)
         y = np.zeros_like(x)
         for i in range(x.shape[0]):
-            if 2 < x[i] < 4:
+            if 4 < x[i] < 6:
                 self.noise[i] = np.random.uniform(-2, 2)
         y += np.sin(5 * x) + 2 + self.noise
         mu = np.sin(5 * x) + 2

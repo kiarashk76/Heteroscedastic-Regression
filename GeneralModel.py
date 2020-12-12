@@ -38,7 +38,7 @@ class GeneralModel():
             mu, sigma = self.model(batch_x.float())
         return mu, sigma
 
-    def train_model(self, batch_x, batch_y, batch_mu=None):#loss_type = '1', '2', '3'
+    def train_model(self, batch_x, batch_y, batch_mu=None, batch_var=None):#loss_type = '1', '2', '3'
         loss_type = self.loss_type
         x = torch.from_numpy(batch_x).float().to(self.device)
         y = torch.from_numpy(batch_y).float().to(self.device)
@@ -51,7 +51,8 @@ class GeneralModel():
                 pred, var = self.model(x)
         if batch_mu is None: # mu is being trained as well
             if loss_type == '1' :
-                loss = torch.mean(((pred - y) ** 2) / (2 * var) + 0.5 * torch.log(var))
+                loss = torch.mean(((pred - y) ** 2) / (2 * batch_var) + 0.5 * torch.log(batch_var))
+                # loss = torch.mean(((pred - y) ** 2) / (2 * var) + 0.5 * torch.log(var))
             elif loss_type == '2':
                 A = (pred-y).unsqueeze(2)
                 loss = torch.mean(torch.matmul(torch.matmul(A.permute(0,2,1), var), A).squeeze(2).squeeze(1) + torch.logdet(var))
