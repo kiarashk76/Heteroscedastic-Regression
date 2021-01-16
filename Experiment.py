@@ -157,12 +157,11 @@ class experiment():
                 ind = mask[i*self.batch_sizes[a]:(i+1)*self.batch_sizes[a]]
                 batch_x, batch_y, batch_mu = self.x[ind], self.y[ind], self.mu[ind]
                 # give batch_mu so mu not being learned
-                noise = (torch.from_numpy(batch_y).float() - torch.from_numpy(batch_mu)) ** 2
-                print(noise[noise==0])
-                exit(0)
+                # mu, sigma = model.test_model(batch_x, batch_y)
+                # noise = (torch.from_numpy(batch_y).float() - mu) ** 2 + 10**-6
                 if self.mu_training[a]:
-                    # model.train_model(batch_x, batch_y, batch_mu=None)
-                    model.train_model(batch_x, batch_y, batch_mu=None, batch_var=noise)
+                    model.train_model(batch_x, batch_y, batch_mu=None)
+                    # model.train_model(batch_x, batch_y, batch_mu=None, batch_var=noise)
                 else:
                     model.train_model(batch_x, batch_y, batch_mu=batch_mu)
     

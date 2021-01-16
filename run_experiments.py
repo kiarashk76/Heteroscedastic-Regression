@@ -14,7 +14,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 from Exp_Bias import *
 from Exp_IrreducibleError import *
-from Exp_withError import experimentWithError
+from ExperimentWithError import experimentWithError
 from Experiment import experiment
 
 from animate import animate
@@ -275,8 +275,3 @@ if __name__ == "__main__":
     exp_name = 'RegFail1_Irre_rangeUniformNoise5'
     exp = experiment_irreducible_error5(params, exp_name)
     # exp.run_experiment()
-
-    # animate
-    fp_in = "plots/" + exp_name + "/*.png"
-    fp_out = "plots/" + exp_name + "/animate.gif"
-    animate(fp_in, fp_out)

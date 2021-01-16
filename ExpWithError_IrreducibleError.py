@@ -1,12 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
-from Experiment import experiment
+from ExperimentWithError import experimentWithError
 
-class experiment_irreducible_error1(experiment):
+class experiment_irreducible_error1(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -19,7 +14,7 @@ class experiment_irreducible_error1(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-class experiment_irreducible_error2(experiment):
+class experiment_irreducible_error2(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -33,7 +28,7 @@ class experiment_irreducible_error2(experiment):
         self.x, self.y, self.mu = x, y, mu
 
 
-class experiment_irreducible_error3(experiment):
+class experiment_irreducible_error3(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -47,7 +42,7 @@ class experiment_irreducible_error3(experiment):
         self.x, self.y, self.mu = x, y, mu
 
 
-class experiment_irreducible_error4(experiment):
+class experiment_irreducible_error4(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -63,7 +58,7 @@ class experiment_irreducible_error4(experiment):
 
 
 
-class experiment_irreducible_error5(experiment):
+class experiment_irreducible_error5(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -82,7 +77,7 @@ class experiment_irreducible_error5(experiment):
         mu = np.sin(5*x) + 2
         self.x, self.y, self.mu = x, y, mu
 
-class experiment_irreducible_error6(experiment):
+class experiment_irreducible_error6(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -100,7 +95,7 @@ class experiment_irreducible_error6(experiment):
         mu = np.ones_like(x)
         self.x, self.y, self.mu = x, y, mu
 
-class experiment_irreducible_error7(experiment):
+class experiment_irreducible_error7(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 2)
@@ -116,7 +111,7 @@ class experiment_irreducible_error7(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-class experiment_irreducible_error8(experiment):
+class experiment_irreducible_error8(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4*np.pi)
@@ -133,7 +128,7 @@ class experiment_irreducible_error8(experiment):
         mu = np.sin(x) + self.noise
         self.x, self.y, self.mu = x, y, mu
 
-class experiment_irreducible_error9(experiment):
+class experiment_irreducible_error9(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -147,7 +142,7 @@ class experiment_irreducible_error9(experiment):
         self.x, self.y, self.mu = x, y, mu
 
 
-class experiment_irreducible_error10(experiment):
+class experiment_irreducible_error10(experimentWithError):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 6)

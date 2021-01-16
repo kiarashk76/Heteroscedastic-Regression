@@ -15,7 +15,7 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 from Exp_Bias import *
 from Exp_IrreducibleError import *
-from Exp_withError import experimentWithError
+from ExperimentWithError import experimentWithError
 from Experiment import experiment
 
 from animate import animate
@@ -26,11 +26,11 @@ if __name__ == "__main__":
     params = {
         # experiment configs
         'num_runs': 1,
-        'num_epochs': 800,
+        'num_epochs': 2000,
         'num_data_points': 2000,
         'plt_show': True,
         'plt_save': False,
-        'plot_show_epoch_freq': 50,
+        'plot_show_epoch_freq': 100,
 
         # agents configs
         'num_agents': num_agent,
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     }
 
     params['hidden_layers_mu'] = [[64, 64]] * 10
-    params['hidden_layers_var'] =  [[128,128]] * 10
+    params['hidden_layers_var'] =  [[]] * 10
     exp_name = 'HetFail2_Irre_rangeUniformNoise1'
     exp = experiment_irreducible_error10(params, exp_name)
     exp.run_experiment()

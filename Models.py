@@ -217,6 +217,8 @@ class ErrorNetwork():
     
     def __create_networks(self):
         self.error = ModelError(self.hidden_layers)
+        self.optimizer = optim.Adam(self.error.parameters(), lr=self.step_size)
+
 
     def __error_output(self, batch_x):
         with torch.no_grad():
@@ -228,23 +230,24 @@ class ErrorNetwork():
             mu, sigma = self.model(batch_x.float())
         return mu, sigma
 
-    def train_error(self, batch_x, batch_y):
+    def train_error(self, batch_x, batch_y_hat, batch_y):
         x = torch.from_numpy(batch_x).float()
         y = torch.from_numpy(batch_y).float()
-        y_hat, _ = self.__model_output(x)
+        try:
+            y_hat = torch.from_numpy(batch_y_hat).float()
+        except:
+            y_hat = batch_y_hat.float()
         error = self.error(x)
         assert error.shape == x.shape, str(error.shape) + str(x.shape)
         target = (y - y_hat) ** 2
         loss = torch.mean((error - target) ** 2)
+        self.optimizer.zero_grad()
         loss.backward()
         if torch.isnan(loss):
             print("loss is nan")
 
-        optimizer = optim.Adam(self.error.parameters(), lr=self.step_size)
-        # optimizer = optim.SGD(model.parameters(), lr=step_size)
+        self.optimizer.step()
 
-        optimizer.step()
-        optimizer.zero_grad()
   
     def test_error(self, batch_x, batch_y):
         x = torch.from_numpy(batch_x).float()
