@@ -192,7 +192,7 @@ class ModelError(nn.Module):
                     self.layers_list.append(l)
                     self.add_module('hidden_layer_' + str(i), l)
             self.head = nn.Linear(num_hidden[-1], 1)
-            torch.nn.init.xavier_uniform_(self.mu.weight, gain=1.0)
+            torch.nn.init.xavier_uniform_(self.head.weight, gain=1.0)
 
 
     def forward(self, x):
