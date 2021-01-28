@@ -116,7 +116,7 @@ class StateTransitionModelSeparate(nn.Module):
 # separated from the begining
 class StateTransitionModelSeparateD_Dim(nn.Module):
     def __init__(self, num_hidden_mu, num_hidden_var, d):
-        super(StateTransitionModelSeparate, self).__init__()
+        super(StateTransitionModelSeparateD_Dim, self).__init__()
         self.layers_list = []
         self.vlayers_list = []
         if len(num_hidden_mu) == 0:
@@ -166,8 +166,11 @@ class StateTransitionModelSeparateD_Dim(nn.Module):
             vlayer = lay
             vl = torch.relu(vlayer(vl))
         mu = self.mu(l)
-        var = torch.log(1 + torch.exp(self.var(vl)))
+        # var = torch.log(1 + torch.exp(self.var(vl))) + 10**-6
+        var = F.softplus(self.var(vl)) + 10**-6
+
         var = torch.diag_embed(var)
+
         return mu, var
 
 

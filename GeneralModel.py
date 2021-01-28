@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
-from Models import ErrorNetwork, StateTransitionModel
+from Models import ErrorNetwork, StateTransitionModel, StateTransitionModelSeparateD_Dim
 from Models import StateTransitionModelSeparate, ModelError
 
 class GeneralModel():
@@ -24,8 +24,10 @@ class GeneralModel():
     
     def __create_networks(self):
 
-        self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var,
-                                                  bias_available=self.bias_available)#, self.data_dim)
+        # self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
+        #                                           bias_available=self.bias_available, self.data_dim)
+        self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
+                                                        self.data_dim)
         # self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.device = torch.device("cpu")
         self.model.to(self.device)
@@ -44,10 +46,6 @@ class GeneralModel():
 
         pred, var = self.model(x)
         assert pred.shape == x.shape, str(pred.shape) + str(var.shape) + str(x.shape)
-        for i in var:
-            if torch.isnan(i):
-                print("khar")
-                pred, var = self.model(x)
         if batch_mu is None: # mu is being trained as well
             if loss_type == '1' :
                 # loss = torch.mean(((pred - y) ** 2) / (2 * batch_var) + 0.5 * torch.log(batch_var))
