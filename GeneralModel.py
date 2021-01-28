@@ -122,10 +122,10 @@ class GeneralModelwithError():
         pred, var = self.model(x)
         assert pred.shape == x.shape, str(pred.shape) + str(var.shape) + str(x.shape)
 
-        for i in var:
-            if torch.isnan(i):
-                print("khar")
-                pred, var = self.model(x)
+        # for i in var:
+        #     if torch.isnan(i):
+        #         print("khar")
+        #         pred, var = self.model(x)
         if batch_mu is None:  # mu is being trained as well
             if loss_type == '1':
                 # loss = torch.mean(((pred - y) ** 2) / (2 * batch_var) + 0.5 * torch.log(batch_var))
