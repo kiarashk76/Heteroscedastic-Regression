@@ -35,46 +35,34 @@ if __name__ == "__main__":
         'hidden_layers_mu': [[]] * num_agent,
         'hidden_layers_var':[[]] * num_agent,
         'data_dim': 2,
-        'hidden_layers_error': [[]] * num_agent,
+        'hidden_layers_error': [[64, 64]] * 10,
         'batch_sizes': [128] * num_agent,
         'step_sizes': [2**-i for i in range(5, 16, 2)],
         'plot_colors': ['b'] * num_agent,
         'loss_type': ['2'] * num_agent,
         'bias_available': [True] * num_agent,
-        'mu_training': [True] * num_agent,
+        'mu_training': [True] * 10,
     }
-    
-    params['mu_training'] = [True] * 10
-    # ********
-    params['hidden_layers_error'] = [[64, 64]] * 10
-
     params['loss_type'] = ['2'] * 10
-    exp_name = 'MD_Irre_linearNoise'
-    exp = MD_experiment_irreducible_linear(params, exp_name)
+    # exp_name = 'MD_Irre_linearNoise'
+    # exp = MD_experiment_irreducible_linear(params, exp_name)
+    # exp.run_experiment()
+
+    exp_name = 'MD_Bias_rangelinearBias'
+    exp = MD_experiment_rangeLBias(params, exp_name)
     exp.run_experiment()
 
-    # params['loss_type'] = ['3'] * 10
-    # exp_name = 'MD_Bias_rangelinearBias'
-    # exp = MD_experiment_rangeLBias(params, exp_name)
-    # exp.run_experiment()
+    # ********
+    exp_name = 'MD_Irre_rangeUniformNoise'
+    exp = MD_experiment_irreducible_error(params, exp_name)
+    exp.run_experiment()
 
-    # # ********
-    # params['hidden_layers_error'] = [[64, 64]] * 10
-
-    # params['loss_type'] = ['3'] * 10
-    # exp_name = 'MD_Irre_rangeUniformNoise'
-    # exp = MD_experiment_irreducible_error(params, exp_name)
-    # exp.run_experiment()
-
-    # # ********
-    # # relu activation
-    # params['hidden_layers_error'] = [[64, 64]] * 10
-    # params['loss_type'] = ['3'] * 10
-
-    # exp_name = 'MD_Bias_quadraticBias1'
-    # exp = MD_experiment_quadraticBias(params, exp_name)
-    # exp.A = 2
-    # exp.run_experiment()
+    # ********
+    # relu activation
+    exp_name = 'MD_Bias_quadraticBias1'
+    exp = MD_experiment_quadraticBias(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
 
 
 
