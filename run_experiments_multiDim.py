@@ -14,6 +14,7 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 from ExpMultiDim import *
+from ExpMultiDim_single_y import *
 
 from animate import animate
 
@@ -44,28 +45,40 @@ if __name__ == "__main__":
         'mu_training': [True] * 10,
     }
     params['loss_type'] = ['2'] * 10
-    # exp_name = 'MD_Irre_linearNoise'
-    # exp = MD_experiment_irreducible_linear(params, exp_name)
-    # exp.run_experiment()
+    exp_name = 'MD_Irre_linearNoise'
+    exp = MD_experiment_irreducible_linear(params, exp_name)
+    exp.run_experiment()
 
-    # exp_name = 'MD_Bias_rangelinearBias'
-    # exp = MD_experiment_rangeLBias(params, exp_name)
-    # exp.run_experiment()
+    exp_name = 'MD_Bias_rangelinearBias'
+    exp = MD_experiment_rangeLBias(params, exp_name)
+    exp.run_experiment()
 
-    # # ********
-    # exp_name = 'MD_Irre_rangeUniformNoise'
-    # exp = MD_experiment_irreducible_error(params, exp_name)
-    # exp.run_experiment()
+    # ********
+    exp_name = 'MD_Irre_rangeUniformNoise'
+    exp = MD_experiment_irreducible_error(params, exp_name)
+    exp.run_experiment()
 
-    # # ********
-    # # relu activation
-    # exp_name = 'MD_Bias_quadraticBias1'
-    # exp = MD_experiment_quadraticBias(params, exp_name)
-    # exp.A = 2
-    # exp.run_experiment()
+    # ********
+    # relu activation
+    exp_name = 'MD_Bias_quadraticBias1'
+    exp = MD_experiment_quadraticBias(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+
+    exp_name = 'MD_experiment_irreducible_linear_single_y'
+    exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
+    exp.run_experiment()
+
+    exp_name = 'MD_experiment_rangeLBias_single_y'
+    exp = MD_experiment_rangeLBias_single_y(params, exp_name)
+    exp.run_experiment()
 
     exp_name = 'MD_experiment_irreducible_error_single_y'
     exp = MD_experiment_irreducible_error_single_y(params, exp_name)
+    exp.run_experiment()
+
+    exp_name = 'MD_experiment_quadraticBias_single_y'
+    exp = MD_experiment_quadraticBias_single_y(params, exp_name)
     exp.run_experiment()
 
 

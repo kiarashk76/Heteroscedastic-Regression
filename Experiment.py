@@ -146,6 +146,8 @@ class experiment():
                 'sigma_error_list': self.error_list_sigma,
                 'params': self.parameters
             }
+            if self.w:
+                data['w'] = self.w
             pickle.dump(data, f)
 
     def train_models(self):
