@@ -46,3 +46,16 @@ if __name__ == "__main__":
     exp_name = 'RegHomo1'
     exp = experiment_homo1(params, exp_name)
     exp.run_experiment()
+
+    params['hidden_layers_mu'] = [[64, 64]] * 10
+    params['loss_type'] = ['1'] * 10
+    # relu activation
+    exp_name = 'Homo2'
+    exp = experiment_homo1(params, exp_name)
+    exp.run_experiment()
+
+    params['loss_type'] = ['3'] * 10
+    # relu activation
+    exp_name = 'RegHomo2'
+    exp = experiment_homo1(params, exp_name)
+    exp.run_experiment()

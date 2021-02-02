@@ -26,9 +26,9 @@ class GeneralModel():
 
         # self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
         #                                           bias_available=self.bias_available, self.data_dim)
-        # self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var)
-        self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
-                                                        self.data_dim)
+        self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var)
+        # self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
+        #                                                 self.data_dim)
         # self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.device = torch.device("cpu")
         self.model.to(self.device)
