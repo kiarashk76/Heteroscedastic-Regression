@@ -206,13 +206,13 @@ class experiment():
                 mu = torch.from_numpy(self.mu).float()
             distance = torch.dist(torch.from_numpy(self.y).float(), mu)
             noise = (torch.from_numpy(self.y).float() - mu) ** 2
-            # noise = torch.sum(noise, dim=1)
-            # diag_var = torch.sum(torch.diagonal(var, dim1=1, dim2=2), dim=1)
-            sigma_distance = torch.dist(noise, var)
+            noise = torch.sum(noise, dim=1)
+            diag_var = torch.sum(torch.diagonal(var, dim1=1, dim2=2), dim=1)
+            sigma_distance = torch.dist(noise, diag_var)
             self.error_list[run_number, epoch_number, a] = distance
             self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
             self.learn_mu[run_number, epoch_number, a] = mu.to(torch.device("cpu"))
-            # self.learn_var[run_number, epoch_number, a] = var.to(torch.device("cpu"))
+            self.learn_var[run_number, epoch_number, a] = torch.diagonal(var, dim1=1, dim2=2).to(torch.device("cpu"))
             # draw plot till now
             if epoch_number % self.plot_show_epoch_freq == 0 and self.plt_show:
                 # mu, var = model.test_model(x, y)
@@ -246,7 +246,7 @@ class experiment():
             plt.close()
 
     def drawPlotUncertainty(self, x, y, y_err, label, color, axis=plt):
-        y_err = y_err[:,0]
+        # y_err = y_err[:,0]
         axis.plot(x, y, color, label=label)
         axis.fill_between(x,
                         y - y_err,

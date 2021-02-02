@@ -35,7 +35,7 @@ if __name__ == "__main__":
     # ********
     params['hidden_layers_var'] = [[64, 64]] * 10
 
-    params['loss_type'] = ['2'] * 10
+    params['loss_type'] = ['1'] * 10
     # relu activation
     exp_name = 'Homo1'
     exp = experiment_homo1(params, exp_name)
@@ -45,4 +45,4 @@ if __name__ == "__main__":
     # relu activation
     exp_name = 'RegHomo1'
     exp = experiment_homo1(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
