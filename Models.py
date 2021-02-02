@@ -97,7 +97,7 @@ class StateTransitionModelSeparate(nn.Module):
             torch.nn.init.xavier_uniform_(self.var.weight, gain=1.0)
 
 
-    def forward(self, x):
+    def forward(self, x, episode_num=600):
         l = copy.copy(x)
         vl = copy.copy(x)
         for i, lay in enumerate(self.layers_list):
@@ -107,7 +107,8 @@ class StateTransitionModelSeparate(nn.Module):
             vlayer = lay
             vl = torch.tanh(vlayer(vl))
         mu = self.mu(l)
-        var = F.softplus(self.var(vl)) + 10**-6
+        # var = F.softplus(self.var(vl)) + 10**-6
+        var = F.softplus(self.var(vl)) + 5*np.exp(-episode_num/100)
         # var = torch.relu(self.var(vl)) + 0.1
         return mu, var
 

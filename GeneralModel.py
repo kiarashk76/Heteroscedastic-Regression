@@ -40,12 +40,12 @@ class GeneralModel():
             mu, sigma = self.model(batch_x.float())
         return mu, sigma
 
-    def train_model(self, batch_x, batch_y, batch_mu=None, batch_var=None):#loss_type = '1', '2', '3'
+    def train_model(self, batch_x, batch_y, batch_mu=None, batch_var=None, episode_num=None):#loss_type = '1', '2', '3'
         loss_type = self.loss_type
         x = torch.from_numpy(batch_x).float().to(self.device)
         y = torch.from_numpy(batch_y).float().to(self.device)
 
-        pred, var = self.model(x)
+        pred, var = self.model(x, episode_num)
         assert pred.shape == x.shape, str(pred.shape) + str(var.shape) + str(x.shape)
         if batch_mu is None: # mu is being trained as well
             if loss_type == '1' :

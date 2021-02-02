@@ -87,7 +87,7 @@ class experiment():
             #train
             for e in tqdm(range(self.num_epochs)):
                 # train models
-                self.train_models()
+                self.train_models(e)
                 self.validate_models(r, e)
 
         # error plot for mu
@@ -150,7 +150,7 @@ class experiment():
                 data['w'] = self.w
             pickle.dump(data, f)
 
-    def train_models(self):
+    def train_models(self, e=None):
         for a, model in enumerate(self.models):
             mask = list(range(self.num_data_points))
             np.random.shuffle(mask)
@@ -162,10 +162,10 @@ class experiment():
                 # mu, sigma = model.test_model(batch_x, batch_y)
                 # noise = (torch.from_numpy(batch_y).float() - mu) ** 2 + 10**-6
                 if self.mu_training[a]:
-                    model.train_model(batch_x, batch_y, batch_mu=None)
+                    model.train_model(batch_x, batch_y, batch_mu=None, episode_num=e)
                     # model.train_model(batch_x, batch_y, batch_mu=None, batch_var=noise)
                 else:
-                    model.train_model(batch_x, batch_y, batch_mu=batch_mu)
+                    model.train_model(batch_x, batch_y, batch_mu=batch_mu, episode_num=e)
     
     def validate_models2(self, run_number, epoch_number):
         #validate models
