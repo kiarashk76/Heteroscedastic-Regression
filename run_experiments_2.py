@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     exp_name = 'HetFail1_Irre_rangeUniformNoise5'
     exp = experiment_irreducible_error10(params, exp_name)
-    #exp.run_experiment()
+    # exp.run_experiment()
 
 
     #******
@@ -116,29 +116,29 @@ if __name__ == "__main__":
     params['hidden_layers_mu'] = [[32,32]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise1'
     exp = experiment_irreducible_error10(params, exp_name)
-    #exp.run_experiment()
+    exp.run_experiment()
 
     params['hidden_layers_mu'] = [[24, 24]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise2'
     exp = experiment_irreducible_error10(params, exp_name)
-    #exp.run_experiment()
+    exp.run_experiment()
 
 
     params['hidden_layers_mu'] = [[16, 16]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise3'
     exp = experiment_irreducible_error10(params, exp_name)
-    #exp.run_experiment()
+    exp.run_experiment()
 
     params['hidden_layers_mu'] = [[12, 12]] * 10
     exp_name = 'RegFail1_Irre_rangeUniformNoise4'
     exp = experiment_irreducible_error10(params, exp_name)
-    exp.run_experiment()
+    # exp.run_experiment()
 
     params['hidden_layers_mu'] = [[8, 8]] * 10
 
     exp_name = 'RegFail1_Irre_rangeUniformNoise5'
     exp = experiment_irreducible_error10(params, exp_name)
-    exp.run_experiment()
+    # exp.run_experiment()
 
 
 
