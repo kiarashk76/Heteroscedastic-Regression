@@ -157,7 +157,7 @@ class StateTransitionModelSeparateD_Dim(nn.Module):
             torch.nn.init.xavier_uniform_(self.var.weight, gain=1.0)
 
 
-    def forward(self, x):
+    def forward(self, x, episode_num=600):
         l = x
         vl = x
         for i, lay in enumerate(self.layers_list):
