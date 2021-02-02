@@ -207,9 +207,8 @@ class experiment():
             distance = torch.dist(torch.from_numpy(self.y).float(), mu)
             noise = (torch.from_numpy(self.y).float() - mu) ** 2
             noise = torch.sum(noise, dim=1)
-            var = torch.sum(var, dim=1)
-            var = torch.sum(var, dim=1)
-            sigma_distance = torch.dist(noise, var)
+            diag_var = torch.sum(torch.diagonal(var, dim1=1, dim2=2), dim=1)
+            sigma_distance = torch.dist(noise, diag_var)
             self.error_list[run_number, epoch_number, a] = distance
             self.error_list_sigma[run_number, epoch_number, a] = sigma_distance
             self.learn_mu[run_number, epoch_number, a] = mu.to(torch.device("cpu"))

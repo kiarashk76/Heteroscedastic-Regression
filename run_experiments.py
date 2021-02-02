@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     exp_name = 'Irre_fixedMu_linearNoise'
     exp = experiment_irreducible_error1(params, exp_name)
-    # exp.run_experiment()
+    exp.run_experiment()
 
     exp_name = 'IrreBias_fixedMu_linearNoise_fixedBias'
     exp = experiment_irreducible_error2(params, exp_name)
