@@ -65,20 +65,20 @@ if __name__ == "__main__":
     exp.A = 2
     exp.run_experiment()
 
-    exp_name = 'MD_experiment_irreducible_linear_single_y'
-    exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
-    exp.run_experiment()
+    # exp_name = 'MD_experiment_irreducible_linear_single_y'
+    # exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
+    # exp.run_experiment()
 
-    exp_name = 'MD_experiment_rangeLBias_single_y'
-    exp = MD_experiment_rangeLBias_single_y(params, exp_name)
-    exp.run_experiment()
+    # exp_name = 'MD_experiment_rangeLBias_single_y'
+    # exp = MD_experiment_rangeLBias_single_y(params, exp_name)
+    # exp.run_experiment()
 
-    exp_name = 'MD_experiment_irreducible_error_single_y'
-    exp = MD_experiment_irreducible_error_single_y(params, exp_name)
-    exp.run_experiment()
+    # exp_name = 'MD_experiment_irreducible_error_single_y'
+    # exp = MD_experiment_irreducible_error_single_y(params, exp_name)
+    # exp.run_experiment()
 
-    exp_name = 'MD_experiment_quadraticBias_single_y'
-    exp = MD_experiment_quadraticBias_single_y(params, exp_name)
-    exp.run_experiment()
+    # exp_name = 'MD_experiment_quadraticBias_single_y'
+    # exp = MD_experiment_quadraticBias_single_y(params, exp_name)
+    # exp.run_experiment()
 
 

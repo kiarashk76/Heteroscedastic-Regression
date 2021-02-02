@@ -5,14 +5,14 @@ from Exp_Homoscedastic import *
 
 
 if __name__ == "__main__":
-    num_agent = 1
+    num_agent = 6
 
     params = {
         # experiment configs
-        'num_runs': 1,
-        'num_epochs': 801,
+        'num_runs': 30,
+        'num_epochs': 800,
         'num_data_points': 2000,
-        'plt_show': True,
+        'plt_show': False,
         'plt_save': False,
         'plot_show_epoch_freq': 100,
 
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         'data_dim': 1,
         'hidden_layers_error': [[]] * num_agent,
         'batch_sizes': [128] * num_agent,
-        'step_sizes': [2 ** -9],  # [2**-i for i in range(5, 16, 2)],
+        'step_sizes': [2**-i for i in range(5, 16, 2)],
         'plot_colors': ['b'] * num_agent,
         'loss_type': ['1'] * num_agent,
         'bias_available': [True] * num_agent,
