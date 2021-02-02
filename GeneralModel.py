@@ -26,6 +26,7 @@ class GeneralModel():
 
         # self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
         #                                           bias_available=self.bias_available, self.data_dim)
+        # self.model = StateTransitionModelSeparate(self.hidden_layers_mu, self.hidden_layers_var)
         self.model = StateTransitionModelSeparateD_Dim(self.hidden_layers_mu, self.hidden_layers_var,
                                                         self.data_dim)
         # self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -52,7 +53,8 @@ class GeneralModel():
                 loss = torch.mean(((pred - y) ** 2) / (2 * var) + 0.5 * torch.log(var))
             elif loss_type == '2':
                 A = (pred-y).unsqueeze(2)
-                loss = torch.mean(torch.matmul(torch.matmul(A.permute(0,2,1), var), A).squeeze(2).squeeze(1) + torch.logdet(var))
+                inv_var = torch.inverse(var)
+                loss = torch.mean(torch.matmul(torch.matmul(A.permute(0,2,1), inv_var), A).squeeze(2).squeeze(1) + torch.logdet(var))
             elif loss_type == '3':
                 loss = torch.mean((pred - y) ** 2)
         else:
