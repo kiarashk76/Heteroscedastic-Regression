@@ -62,4 +62,4 @@ class MD_experiment_quadraticBias(experiment):
 
         y = self.A * (x ** 2)
         mu = self.A * (x ** 2)
-        self.x, self.y, self.mu = x, y, mu        
+        self.x, self.y, self.mu = x, y, mu 

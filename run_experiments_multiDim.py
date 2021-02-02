@@ -34,7 +34,7 @@ if __name__ == "__main__":
         'names': ['het'] * num_agent,
         'hidden_layers_mu': [[]] * num_agent,
         'hidden_layers_var':[[]] * num_agent,
-        'data_dim': 2,
+        'data_dim': 20,
         'hidden_layers_error': [[64, 64]] * 10,
         'batch_sizes': [128] * num_agent,
         'step_sizes': [2**-i for i in range(5, 16, 2)],
@@ -48,22 +48,24 @@ if __name__ == "__main__":
     # exp = MD_experiment_irreducible_linear(params, exp_name)
     # exp.run_experiment()
 
-    exp_name = 'MD_Bias_rangelinearBias'
-    exp = MD_experiment_rangeLBias(params, exp_name)
+    # exp_name = 'MD_Bias_rangelinearBias'
+    # exp = MD_experiment_rangeLBias(params, exp_name)
+    # exp.run_experiment()
+
+    # # ********
+    # exp_name = 'MD_Irre_rangeUniformNoise'
+    # exp = MD_experiment_irreducible_error(params, exp_name)
+    # exp.run_experiment()
+
+    # # ********
+    # # relu activation
+    # exp_name = 'MD_Bias_quadraticBias1'
+    # exp = MD_experiment_quadraticBias(params, exp_name)
+    # exp.A = 2
+    # exp.run_experiment()
+
+    exp_name = 'MD_experiment_irreducible_error_single_y'
+    exp = MD_experiment_irreducible_error_single_y(params, exp_name)
     exp.run_experiment()
-
-    # ********
-    exp_name = 'MD_Irre_rangeUniformNoise'
-    exp = MD_experiment_irreducible_error(params, exp_name)
-    exp.run_experiment()
-
-    # ********
-    # relu activation
-    exp_name = 'MD_Bias_quadraticBias1'
-    exp = MD_experiment_quadraticBias(params, exp_name)
-    exp.A = 2
-    exp.run_experiment()
-
-
 
 
