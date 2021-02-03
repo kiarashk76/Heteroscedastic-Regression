@@ -6,7 +6,7 @@ class MD_experiment_irreducible_linear(experiment):
         # create the dataset
         range_data_points = (0, 4)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
-        x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
+        x = np.reshape(np.sort(x, axis=0), (self.num_data_points, self.parameters['data_dim']))
 
         self.noise = np.zeros_like(x)
         for i in range(x.shape[0]):
@@ -22,7 +22,7 @@ class MD_experiment_rangeLBias(experiment):
         # create the dataset
         range_data_points = (0, 4)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
-        x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
+        x = np.reshape(np.sort(x, axis=0), (self.num_data_points, self.parameters['data_dim']))
 
         self.noise = np.zeros_like(x)
         for i in range(x.shape[0]):
@@ -38,7 +38,7 @@ class MD_experiment_irreducible_error(experiment):
         # create the dataset
         range_data_points = (0, 4)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
-        x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
+        x = np.reshape(np.sort(x, axis=0), (self.num_data_points, self.parameters['data_dim']))
 
         self.noise = np.zeros_like(x)
         for i in range(x.shape[0]):
@@ -58,8 +58,10 @@ class MD_experiment_quadraticBias(experiment):
         # create the dataset
         range_data_points = (-4, 4)
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
-        x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
+        x = np.reshape(np.sort(x, axis=0), (self.num_data_points, self.parameters['data_dim']))
 
         y = self.A * (x ** 2)
         mu = self.A * (x ** 2)
-        self.x, self.y, self.mu = x, y, mu 
+        self.x, self.y, self.mu = x, y, mu
+
+
