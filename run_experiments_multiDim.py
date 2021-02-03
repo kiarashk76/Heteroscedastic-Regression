@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import math
 import os
+import argparse
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
@@ -20,7 +21,10 @@ from animate import animate
 
 if __name__ == "__main__":
     num_agent = 6
-    experiment_to_run = "1"
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--exp_num')
+    args = parser.parse_args()
 
     params = {
         # experiment configs
@@ -36,7 +40,7 @@ if __name__ == "__main__":
         'names': ['het'] * num_agent,
         'hidden_layers_mu': [[]] * num_agent,
         'hidden_layers_var':[[]] * num_agent,
-        'data_dim': 20,
+        'data_dim': 10,
         'hidden_layers_error': [[64, 64]] * 10,
         'batch_sizes': [128] * num_agent,
         'step_sizes': [2**-i for i in range(5, 16, 2)],
@@ -46,6 +50,8 @@ if __name__ == "__main__":
         'mu_training': [True] * 10,
     }
     params['loss_type'] = ['2'] * 10
+
+    experiment_to_run = args.exp_num
 
     if experiment_to_run == '1':
         exp_name = 'MD_Irre_linearNoise'
@@ -90,5 +96,3 @@ if __name__ == "__main__":
         exp_name = 'MD_experiment_quadraticBias_single_y'
         exp = MD_experiment_quadraticBias_single_y(params, exp_name)
         exp.run_experiment()
-
-
