@@ -20,6 +20,7 @@ from animate import animate
 
 if __name__ == "__main__":
     num_agent = 6
+    experiment_to_run = "1"
 
     params = {
         # experiment configs
@@ -45,40 +46,49 @@ if __name__ == "__main__":
         'mu_training': [True] * 10,
     }
     params['loss_type'] = ['2'] * 10
-    # exp_name = 'MD_Irre_linearNoise'
-    # exp = MD_experiment_irreducible_linear(params, exp_name)
-    # exp.run_experiment()
 
-    # exp_name = 'MD_Bias_rangelinearBias'
-    # exp = MD_experiment_rangeLBias(params, exp_name)
-    # exp.run_experiment()
+    if experiment_to_run == '1':
+        exp_name = 'MD_Irre_linearNoise'
+        exp = MD_experiment_irreducible_linear(params, exp_name)
+        exp.run_experiment()
+    
+    elif experiment_to_run == '2':
+        exp_name = 'MD_Bias_rangelinearBias'
+        exp = MD_experiment_rangeLBias(params, exp_name)
+        exp.run_experiment()
 
-    # # ********
-    # exp_name = 'MD_Irre_rangeUniformNoise'
-    # exp = MD_experiment_irreducible_error(params, exp_name)
-    # exp.run_experiment()
+    # ********
+    elif experiment_to_run == '3':
+        exp_name = 'MD_Irre_rangeUniformNoise'
+        exp = MD_experiment_irreducible_error(params, exp_name)
+        exp.run_experiment()
 
-    # # ********
-    # # relu activation
-    # exp_name = 'MD_Bias_quadraticBias1'
-    # exp = MD_experiment_quadraticBias(params, exp_name)
-    # exp.A = 2
-    # exp.run_experiment()
+    # ********
+    # relu activation
+    elif experiment_to_run == '4':
+        exp_name = 'MD_Bias_quadraticBias1'
+        exp = MD_experiment_quadraticBias(params, exp_name)
+        exp.A = 2
+        exp.run_experiment()
 
-    exp_name = 'MD_experiment_irreducible_linear_single_y'
-    exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
-    exp.run_experiment()
+    elif experiment_to_run == '5':
+        exp_name = 'MD_experiment_irreducible_linear_single_y'
+        exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
+        exp.run_experiment()
 
-    exp_name = 'MD_experiment_rangeLBias_single_y'
-    exp = MD_experiment_rangeLBias_single_y(params, exp_name)
-    exp.run_experiment()
+    elif experiment_to_run == '6':
+        exp_name = 'MD_experiment_rangeLBias_single_y'
+        exp = MD_experiment_rangeLBias_single_y(params, exp_name)
+        exp.run_experiment()
 
-    exp_name = 'MD_experiment_irreducible_error_single_y'
-    exp = MD_experiment_irreducible_error_single_y(params, exp_name)
-    exp.run_experiment()
+    elif experiment_to_run == '7':
+        exp_name = 'MD_experiment_irreducible_error_single_y'
+        exp = MD_experiment_irreducible_error_single_y(params, exp_name)
+        exp.run_experiment()
 
-    exp_name = 'MD_experiment_quadraticBias_single_y'
-    exp = MD_experiment_quadraticBias_single_y(params, exp_name)
-    exp.run_experiment()
+    elif experiment_to_run == '8':
+        exp_name = 'MD_experiment_quadraticBias_single_y'
+        exp = MD_experiment_quadraticBias_single_y(params, exp_name)
+        exp.run_experiment()
 
 
