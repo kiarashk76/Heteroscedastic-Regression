@@ -35,7 +35,7 @@ if __name__ == "__main__":
         'names': ['het'] * num_agent,
         'hidden_layers_mu': [[]] * num_agent,
         'hidden_layers_var':[[]] * num_agent,
-        'data_dim': 20,
+        'data_dim': 10,
         'hidden_layers_error': [[64, 64]] * 10,
         'batch_sizes': [128] * num_agent,
         'step_sizes': [2**-i for i in range(5, 16, 2)],
