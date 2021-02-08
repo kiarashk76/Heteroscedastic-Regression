@@ -15,15 +15,20 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 from ExpMultiDim import *
 from ExpMultiDim_single_y import *
-
+import argparse
 from animate import animate
-
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--run_num', default="0")
+
+    args = parser.parse_args()
+    # run_num_list = list(range(int(args.start_run), int(args.end_run)))
     num_agent = 6
 
     params = {
         # experiment configs
-        'num_runs': 30,
+        'num_runs': 1,
         'num_epochs': 800,
         'num_data_points': 2000,
         'plt_show': False,
@@ -46,40 +51,65 @@ if __name__ == "__main__":
     }
     params['hidden_layers_var'] = [[64, 64]] * 10
     params['loss_type'] = ['2'] * 10
+
     exp_name = 'MD_Irre_linearNoise'
+
+    params['run_number'] = int(args.run_num)
     exp = MD_experiment_irreducible_linear(params, exp_name)
     exp.run_experiment()
 
-    exp_name = 'MD_Bias_rangelinearBias'
-    exp = MD_experiment_rangeLBias(params, exp_name)
-    exp.run_experiment()
-
-    # ********
-    exp_name = 'MD_Irre_rangeUniformNoise'
-    exp = MD_experiment_irreducible_error(params, exp_name)
-    exp.run_experiment()
-
-    # ********
-    # relu activation
-    exp_name = 'MD_Bias_quadraticBias1'
-    exp = MD_experiment_quadraticBias(params, exp_name)
-    exp.A = 2
-    exp.run_experiment()
-
-    exp_name = 'MD_experiment_irreducible_linear_single_y'
-    exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
-    exp.run_experiment()
-
-    exp_name = 'MD_experiment_rangeLBias_single_y'
-    exp = MD_experiment_rangeLBias_single_y(params, exp_name)
-    exp.run_experiment()
-
-    exp_name = 'MD_experiment_irreducible_error_single_y'
-    exp = MD_experiment_irreducible_error_single_y(params, exp_name)
-    exp.run_experiment()
-
-    exp_name = 'MD_experiment_quadraticBias_single_y'
-    exp = MD_experiment_quadraticBias_single_y(params, exp_name)
-    exp.run_experiment()
 
 
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_Bias_rangelinearBias'
+#     exp = MD_experiment_rangeLBias(params, exp_name)
+#     exp.run_experiment()
+#     del exp
+#
+# # ********
+
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_Irre_rangeUniformNoise'
+#     exp = MD_experiment_irreducible_error(params, exp_name)
+#     exp.run_experiment()
+#     del exp
+#
+# # ********
+# # relu activation
+
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_Bias_quadraticBias1'
+#     exp = MD_experiment_quadraticBias(params, exp_name)
+#     exp.A = 2
+#     exp.run_experiment()
+#     del exp
+#
+
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_experiment_irreducible_linear_single_y'
+#     exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
+#     exp.run_experiment()
+#     del exp
+#
+
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_experiment_rangeLBias_single_y'
+#     exp = MD_experiment_rangeLBias_single_y(params, exp_name)
+#     exp.run_experiment()
+#     del exp
+#
+
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_experiment_irreducible_error_single_y'
+#     exp = MD_experiment_irreducible_error_single_y(params, exp_name)
+#     exp.run_experiment()
+#     del exp
+#
+
+#     params['run_number'] = int(args.run_num)
+#     exp_name = 'MD_experiment_quadraticBias_single_y'
+#     exp = MD_experiment_quadraticBias_single_y(params, exp_name)
+#     exp.run_experiment()
+#     del exp
+#
+#

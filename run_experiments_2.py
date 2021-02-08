@@ -26,7 +26,7 @@ if __name__ == "__main__":
     num_agent = 6
     
     parser = argparse.ArgumentParser()
-    parser.add_argument('--exp_num')
+    parser.add_argument('--exp_num', default="8")
     args = parser.parse_args()
 
     params = {
@@ -58,6 +58,8 @@ if __name__ == "__main__":
     params['hidden_layers_mu'] = [[32,32]] * 10
     params['hidden_layers_var'] =  [[]] * 10
     params['loss_type'] =  ['1'] * 10
+
+
 
     experiment_to_run = args.exp_num
 

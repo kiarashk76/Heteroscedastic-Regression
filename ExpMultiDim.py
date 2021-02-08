@@ -1,7 +1,7 @@
 import numpy as np
-from Experiment import experiment
+from Experiment import experiment_v2
 
-class MD_experiment_irreducible_linear(experiment):
+class MD_experiment_irreducible_linear(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -17,7 +17,7 @@ class MD_experiment_irreducible_linear(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-class MD_experiment_rangeLBias(experiment):
+class MD_experiment_rangeLBias(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -33,7 +33,7 @@ class MD_experiment_rangeLBias(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-class MD_experiment_irreducible_error(experiment):
+class MD_experiment_irreducible_error(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -49,9 +49,9 @@ class MD_experiment_irreducible_error(experiment):
         mu = 2 * x
         self.x, self.y, self.mu = x, y, mu
 
-class MD_experiment_quadraticBias(experiment):
+class MD_experiment_quadraticBias(experiment_v2):
     def __init__(self, params, experiment_name):
-        experiment.__init__(self, params, experiment_name)
+        experiment_v2.__init__(self, params, experiment_name)
         self.A = 0.5
 
     def create_dataset(self):

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo hello world
+
+START=0
+END=30
+
+
+for (( c=$START; c<$END; c++))
+do
+  echo "run_numer=$c"
+  python run_experiments_multiDim.py --run_num $c
+done

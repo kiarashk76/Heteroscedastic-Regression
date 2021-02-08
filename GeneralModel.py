@@ -21,6 +21,8 @@ class GeneralModel():
 
         self.__create_networks()
 
+    def __del__(self):
+        del self.model
     
     def __create_networks(self):
 
