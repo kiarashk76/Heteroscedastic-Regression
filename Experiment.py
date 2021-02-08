@@ -264,7 +264,7 @@ class experiment_v2():
         # experiment configs
         self.parameters = params
         self.num_runs = params['num_runs']
-        self.run_number = params['run_number']
+        self.run_num = params['run_number']
         self.num_epochs = params['num_epochs']
         self.num_data_points = params['num_data_points']
         self.plt_show = params['plt_show']
@@ -335,7 +335,7 @@ class experiment_v2():
         np.random.seed(0)
         self.create_dataset()
         for r in range(self.num_runs):
-            np.random.seed(self.run_number)
+            np.random.seed(self.run_num)
             # print('\n run number: ', r+1)
 
             self.init_models()
@@ -393,7 +393,7 @@ class experiment_v2():
         if not os.path.exists("data_v2/"+self.experiment_name):
             os.mkdir("data_v2/"+self.experiment_name)
 
-        with open("data_v2/"+self.experiment_name +"/"+ self.experiment_name+"_"+str(self.run_number) + '.p', 'wb') as f:
+        with open("data_v2/"+self.experiment_name +"/"+ self.experiment_name+"_"+str(self.run_num) + '.p', 'wb') as f:
             data = {
                 'x': self.x,
                 'y': self.y,
@@ -407,12 +407,12 @@ class experiment_v2():
             }
             try:
                 data['w'] = self.w
-                pickle.dump(data, f)
-                f.close()
-                del data
+
+
             except:
                 pass
 
+            pickle.dump(data, f)
 
     def train_models(self, e=None):
         for a, model in enumerate(self.models):
