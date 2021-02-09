@@ -21,6 +21,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--run_num', default="0")
+    parser.add_argument('--exp_num', default="1")
+
 
     args = parser.parse_args()
     # run_num_list = list(range(int(args.start_run), int(args.end_run)))
@@ -51,13 +53,13 @@ if __name__ == "__main__":
     }
     params['hidden_layers_var'] = [[64, 64]] * 10
 
-
-    # params['loss_type'] = ['2'] * 10
-    # params['run_number'] = int(args.run_num)
-    # exp_name = 'MD_Irre_linearNoise'
-    # exp = MD_experiment_irreducible_linear(params, exp_name)
-    # exp.run_experiment()
-
+if args.exp_num == "1":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Irre_linearNoise'
+    exp = MD_experiment_irreducible_linear(params, exp_name)
+    exp.run_experiment()
+elif args.exp_num == "2":
     params['loss_type'] = ['3'] * 10
     params['run_number'] = int(args.run_num)
     exp_name = 'MD_Irre_linearNoise_MSE'
@@ -66,127 +68,127 @@ if __name__ == "__main__":
 
 #####################################################################################
 
-#     params['loss_type'] = ['2'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_Bias_rangelinearBias'
-#     exp = MD_experiment_rangeLBias(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-#     params['loss_type'] = ['3'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_Bias_rangelinearBias_MSE'
-#     exp = MD_experiment_rangeLBias(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-# # ********#####################################################################################
-#     params['loss_type'] = ['2'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_Irre_rangeUniformNoise'
-#     exp = MD_experiment_irreducible_error(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-#     params['loss_type'] = ['3'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_Irre_rangeUniformNoise_MSE'
-#     exp = MD_experiment_irreducible_error(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-# # ********#######################################################################################################################
-# # relu activation
-#     params['loss_type'] = ['2'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_Bias_quadraticBias1'
-#     exp = MD_experiment_quadraticBias(params, exp_name)
-#     exp.A = 2
-#     exp.run_experiment()
-#     del exp
-#
-#     params['loss_type'] = ['3'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_Bias_quadraticBias1_MSE'
-#     exp = MD_experiment_quadraticBias(params, exp_name)
-#     exp.A = 2
-#     exp.run_experiment()
-#     del exp
-#
-#
-########################################################################################################################
-#
-#
-#
-#     params['loss_type'] = ['2'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_experiment_irreducible_linear_single_y'
-#     exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-#     params['loss_type'] = ['3'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_experiment_irreducible_linear_single_y_MSE'
-#     exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-#
-#
-#########################################################################################################################################
-#
-#
-#
-#     params['loss_type'] = ['2'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_experiment_rangeLBias_single_y'
-#     exp = MD_experiment_rangeLBias_single_y(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-#     params['loss_type'] = ['3'] * 10
-#     params['run_number'] = int(args.run_num)
-#     exp_name = 'MD_experiment_rangeLBias_single_y_MSE'
-#     exp = MD_experiment_rangeLBias_single_y(params, exp_name)
-#     exp.run_experiment()
-#     del exp
-#
-#
-#########################################################################################################################################
-    #
-    #
-    #
-    # params['loss_type'] = ['2'] * 10
-    # params['run_number'] = int(args.run_num)
-    # exp_name = 'MD_experiment_irreducible_error_single_y'
-    # exp = MD_experiment_irreducible_error_single_y(params, exp_name)
-    # exp.run_experiment()
-    # del exp
-    #
-    # params['loss_type'] = ['3'] * 10
-    # params['run_number'] = int(args.run_num)
-    # exp_name = 'MD_experiment_irreducible_error_single_y_MSE'
-    # exp = MD_experiment_irreducible_error_single_y(params, exp_name)
-    # exp.run_experiment()
-    # del exp
-    #
-    #
-    ########################################################################################################################
-    #
-    #
-    #
-    # params['loss_type'] = ['2'] * 10
-    # params['run_number'] = int(args.run_num)
-    # exp_name = 'MD_experiment_quadraticBias_single_y'
-    # exp = MD_experiment_quadraticBias_single_y(params, exp_name)
-    # exp.run_experiment()
-    # del exp
-    #
-    # params['loss_type'] = ['3'] * 10
-    # params['run_number'] = int(args.run_num)
-    # exp_name = 'MD_experiment_quadraticBias_single_y_MSE'
-    # exp = MD_experiment_quadraticBias_single_y(params, exp_name)
-    # exp.run_experiment()
-    # del exp
+elif args.exp_num == "3":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Bias_rangelinearBias'
+    exp = MD_experiment_rangeLBias(params, exp_name)
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "4":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Bias_rangelinearBias_MSE'
+    exp = MD_experiment_rangeLBias(params, exp_name)
+    exp.run_experiment()
+    del exp
+
+# ********#####################################################################################
+elif args.exp_num == "5":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Irre_rangeUniformNoise'
+    exp = MD_experiment_irreducible_error(params, exp_name)
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "6":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Irre_rangeUniformNoise_MSE'
+    exp = MD_experiment_irreducible_error(params, exp_name)
+    exp.run_experiment()
+    del exp
+# ********#######################################################################################################################
+# relu activation
+elif args.exp_num == "7":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Bias_quadraticBias1'
+    exp = MD_experiment_quadraticBias(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "8":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_Bias_quadraticBias1_MSE'
+    exp = MD_experiment_quadraticBias(params, exp_name)
+    exp.A = 2
+    exp.run_experiment()
+    del exp
+
+
+#######################################################################################################################
+
+elif args.exp_num == "9":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_irreducible_linear_single_y'
+    exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "10":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_irreducible_linear_single_y_MSE'
+    exp = MD_experiment_irreducible_linear_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+
+
+
+########################################################################################################################################
+
+elif args.exp_num == "11":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_rangeLBias_single_y'
+    exp = MD_experiment_rangeLBias_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "12":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_rangeLBias_single_y_MSE'
+    exp = MD_experiment_rangeLBias_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+
+
+########################################################################################################################################
+
+elif args.exp_num == "13":
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_irreducible_error_single_y'
+    exp = MD_experiment_irreducible_error_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "14":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_irreducible_error_single_y_MSE'
+    exp = MD_experiment_irreducible_error_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+
+
+    #######################################################################################################################
+
+elif args.exp_num == "15":
+
+    params['loss_type'] = ['2'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_quadraticBias_single_y'
+    exp = MD_experiment_quadraticBias_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
+elif args.exp_num == "16":
+    params['loss_type'] = ['3'] * 10
+    params['run_number'] = int(args.run_num)
+    exp_name = 'MD_experiment_quadraticBias_single_y_MSE'
+    exp = MD_experiment_quadraticBias_single_y(params, exp_name)
+    exp.run_experiment()
+    del exp
 
 

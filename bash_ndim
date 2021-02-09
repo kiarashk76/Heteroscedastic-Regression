@@ -2,12 +2,18 @@
 
 echo hello world
 
-START=0
-END=30
+STARTRUN=0
+ENDRUN=30
+
+STARTEXP=1
+ENDEXP=6
 
 
-for (( c=$START; c<$END; c++))
+for (( e=STARTEXP; e<=ENDEXP; e++))
 do
-  echo "run_numer=$c"
-  python run_experiments_multiDim.py --run_num $c
+  for (( c=STARTRUN; c<ENDRUN; c++))
+  do
+    echo "experiment=$e -> run_numer=$c"
+    python run_experiments_multiDim.py --run_num $c --exp_num $e
+  done
 done
