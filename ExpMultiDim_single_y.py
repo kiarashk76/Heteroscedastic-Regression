@@ -1,7 +1,8 @@
 import numpy as np
+from Experiment import experiment_v2
 from Experiment import experiment
 
-class MD_experiment_irreducible_linear_single_y(experiment):
+class MD_experiment_irreducible_linear_single_y(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -22,7 +23,7 @@ class MD_experiment_irreducible_linear_single_y(experiment):
 
         self.x, self.y, self.mu = x, y, mu
 
-class MD_experiment_rangeLBias_single_y(experiment):
+class MD_experiment_rangeLBias_single_y(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -43,7 +44,7 @@ class MD_experiment_rangeLBias_single_y(experiment):
 
         self.x, self.y, self.mu = x, y, mu
 
-class MD_experiment_irreducible_error_single_y(experiment):
+class MD_experiment_irreducible_error_single_y(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)
@@ -64,7 +65,7 @@ class MD_experiment_irreducible_error_single_y(experiment):
 
         self.x, self.y, self.mu = x, y, mu
 
-class MD_experiment_quadraticBias_single_y(experiment):
+class MD_experiment_quadraticBias_single_y(experiment_v2):
     def create_dataset(self):
         # create the dataset
         range_data_points = (0, 4)

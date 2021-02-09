@@ -4,11 +4,11 @@
 STARTRUN=0
 ENDRUN=30
 
-STARTEXP=1
-ENDEXP=6
+STARTEXP=16
+ENDEXP=1
 
 
-for (( e=STARTEXP; e<=ENDEXP; e++))
+for (( e=STARTEXP; e>=ENDEXP; e--))
 do
   for (( c=STARTRUN; c<ENDRUN; c++))
   do
