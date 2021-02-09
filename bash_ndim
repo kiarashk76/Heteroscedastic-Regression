@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo hello world
 
 STARTRUN=0
 ENDRUN=30
