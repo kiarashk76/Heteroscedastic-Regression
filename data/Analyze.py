@@ -1093,7 +1093,7 @@ def main5():
                 "MD_experiment_irreducible_error_single_y_totall.p",
                 "MD_experiment_irreducible_linear_single_y_totall.p",
                 "MD_experiment_quadraticBias_single_y_totall.p",
-                "MD_experiment_rangeLBias_single_y_totall.P",
+                "MD_experiment_rangeLBias_single_y_totall.p",
                 "MD_Irre_linearNoise_totall.p",
                 "MD_Irre_rangeUniformNoise_totall.p"
     ]
@@ -1221,6 +1221,7 @@ def main5():
         drawPlotUncertainty(threshold, np.asarray(avg_performance_list), np.asarray(std_performance_list)
                             , label="reg", color="red", axis=axs[i, j])
         fig1.show()
+        fig1.savefig("data/final_results/"+ exp_name_het + ".svg", format='svg')
 
 if __name__ == "__main__":
     threshold_hard = [0.1, 0.5, 1.0]
