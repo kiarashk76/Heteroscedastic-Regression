@@ -4,6 +4,9 @@ import os
 from Exp_Bias import *
 from Exp_IrreducibleError import *
 import matplotlib.pyplot as plt
+from Experiment import *
+from ExpMultiDim_single_y import *
+from ExpMultiDim import *
 from tqdm import tqdm
 
 legend_size = 6
@@ -62,7 +65,22 @@ exp_map_name = {
     'HetFail2_Irre_rangeUniformNoise3AAA': experiment_irreducible_error10,
     'HetFail2_Irre_rangeUniformNoise4AAA': experiment_irreducible_error10,
     'HetFail2_Irre_rangeUniformNoise15AAA': experiment_irreducible_error10,
-
+    'MD_Bias_quadraticBias1_MSE_totall.p': MD_experiment_quadraticBias,
+    'MD_Bias_quadraticBias1_totall.p': MD_experiment_quadraticBias,
+    'MD_Bias_rangelinearBias_MSE_totall.p': MD_experiment_rangeLBias,
+    'MD_Bias_rangelinearBias_totall.p': MD_experiment_rangeLBias,
+    'MD_experiment_irreducible_error_single_y_MSE_totall.p': MD_experiment_irreducible_error_single_y,
+    'MD_experiment_irreducible_error_single_y_totall.p': MD_experiment_irreducible_error_single_y,
+    'MD_experiment_irreducible_linear_single_y_MSE_totall.p': MD_experiment_irreducible_linear_single_y,
+    'MD_experiment_irreducible_linear_single_y_totall.p': MD_experiment_irreducible_linear_single_y,
+    'MD_experiment_quadraticBias_single_y_MSE_totall.p': MD_experiment_quadraticBias_single_y,
+    'MD_experiment_quadraticBias_single_y_totall.p': MD_experiment_quadraticBias_single_y,
+    'MD_experiment_rangeLBias_single_y_MSE_totall.p': MD_experiment_rangeLBias_single_y,
+    'MD_experiment_rangeLBias_single_y_totall.p': MD_experiment_rangeLBias_single_y,
+    'MD_Irre_linearNoise_MSE_totall.p': MD_experiment_irreducible_linear,
+    'MD_Irre_linearNoise_totall.p': MD_experiment_irreducible_linear,
+    'MD_Irre_rangeUniformNoise_MSE_totall.p': MD_experiment_irreducible_error,
+    'MD_Irre_rangeUniformNoise_totall.p': MD_experiment_irreducible_error,
 }
 
 
@@ -145,11 +163,11 @@ def best_stepsize_wrt_thresh2(learn_mu, true_mu, step_sizes, threshold, name, ty
     max_value = -np.inf
     max_index = -1
     max_std = 0
-    print("finding the best step size for "+name+"... \n with threshold="+ str(threshold))
+    # print("finding the best step size for "+name+"... \n with threshold="+ str(threshold))
     for s_index in step_sizes:
         accuracy = compute_mu_accuracy2(learn_mu[:, -1, s_index], true_mu, threshold, type)
-        performance = np.mean(accuracy, axis=0)
-        std = np.std(accuracy, axis=0)
+        performance = np.mean(accuracy, axis=0).mean()
+        std = np.std(accuracy, axis=0).mean()
         if performance > max_value:
             max_value = performance
             max_std = std
@@ -159,7 +177,7 @@ def best_stepsize_wrt_thresh2(learn_mu, true_mu, step_sizes, threshold, name, ty
 def best_stepsize_wrt_mse(mse_list, name):
     max_value = np.inf
     max_index = -1
-    print("finding the best step size for "+name+"... with mse")
+    # print("finding the best step size for "+name+"... with mse")
     avg_mse = np.mean(mse_list, axis=0)
     step_size_index_list = list(range(avg_mse.shape[1]))
     for s_index in range(mse_list.shape[2]):
@@ -167,9 +185,9 @@ def best_stepsize_wrt_mse(mse_list, name):
         value1 = np.mean(avg_mse[-100:,s_index])
         value2 = np.mean(avg_mse[-10:, s_index])
         # print(np.abs(value1 - value2))
-        if np.abs(value1 - value2) > 0.5:
-            step_size_index_list.remove(s_index)
-            continue
+        # if np.abs(value1 - value2) > 0.5:
+        #     step_size_index_list.remove(s_index)
+        #     continue
         if value < max_value:
             max_value = value
             max_index = s_index
@@ -1066,8 +1084,144 @@ def hetfail2(hard_threshold, soft_threshold):
         # fig.savefig("data/Plots/FailExampleMu"+str(counter)+".eps", format='eps')
         fig.show()
 
-def main5(path):
-    pass
+def main5():
+    path = "final_results"
+    results = os.listdir(path)
+    het_exps = [
+                "MD_Bias_quadraticBias1_totall.p",
+                "MD_Bias_rangelinearBias_totall.p",
+                "MD_experiment_irreducible_error_single_y_totall.p",
+                "MD_experiment_irreducible_linear_single_y_totall.p",
+                "MD_experiment_quadraticBias_single_y_totall.p",
+                "MD_experiment_rangeLBias_single_y_totall.P",
+                "MD_Irre_linearNoise_totall.p",
+                "MD_Irre_rangeUniformNoise_totall.p"
+    ]
+
+    reg_exps = [
+                "MD_Bias_quadraticBias1_MSE_totall.p",
+                "MD_Bias_rangelinearBias_MSE_totall.p",
+                "MD_experiment_irreducible_error_single_y_MSE_totall.p",
+                "MD_experiment_irreducible_linear_single_y_MSE_totall.p",
+                "MD_experiment_quadraticBias_single_y_MSE_totall.p",
+                "MD_experiment_rangeLBias_single_y_MSE_totall.p",
+                "MD_Irre_linearNoise_MSE_totall.p",
+                "MD_Irre_rangeUniformNoise_MSE_totall.p"
+    ]
+
+    for exp_name_het, exp_name_reg in zip(het_exps, reg_exps):
+        print(exp_name_het, exp_name_reg)
+        fig1, axs = plt.subplots(2, 2, constrained_layout=False)
+        fig1.suptitle(exp_name_het.split("_")[1:-1])
+        with open(path + "/" + exp_name_het, 'rb') as fp:
+            try:
+                data_het = pickle.load(fp)
+            except:
+                print("*****************CAN'T OPEN THE FILE:",exp_name_het)
+                continue
+        with open(path + "/" + exp_name_reg, 'rb') as fp:
+            try:
+                data_reg = pickle.load(fp)
+            except:
+                print("*****************CAN'T OPEN THE FILE:",exp_name_reg)
+                continue
+
+        exit(0)
+        # mu mse plot
+        i, j = 0, 0
+        best_s_mse, converged_step_sizes = best_stepsize_wrt_mse(data_reg['mu_error_list'], exp_name_reg)
+        step_size = np.log2(data_reg['params']['step_sizes'][best_s_mse])
+        draw_mse_stepsize(data_reg, axs[i, j], 'red', 'reg' + str(step_size), best_s_mse, title=False)
+
+        best_s_mse, converged_step_sizes = best_stepsize_wrt_mse(data_het['mu_error_list'], exp_name_het)
+        step_size = np.log2(data_het['params']['step_sizes'][best_s_mse])
+        draw_mse_stepsize(data_het, axs[i, j], 'blue', 'het' + str(step_size), best_s_mse, title=False)
+        axs[i, j].set_title("mse mu")
+
+        i, j = 0, 1
+        axs[i, j].set_yscale("log")
+        draw_var_mse_stepsize(data_het, axs[i, j], 'blue', 'het' + str(step_size), best_s_mse, title=False)
+        axs[i, j].set_title("mse var")
+
+        i, j = 1, 0
+        axs[i, j].set_title("hard thresh")
+
+        axs[i, j].spines['top'].set_visible(False)
+        axs[i, j].spines['right'].set_visible(False)
+        learn_mu_reg = data_reg['last_mu']
+        learn_mu_het = data_het['last_mu']
+        exp_name = exp_name_het
+        x, y, true_mu = recreate_dataset(exp_name, data_het['params'])
+
+        # best parameters plot hard threshold
+        best_s_mse_het, converged_step_sizes_het = best_stepsize_wrt_mse(data_het['mu_error_list'], "het")
+        best_s_mse_reg, converged_step_sizes_reg = best_stepsize_wrt_mse(data_reg['mu_error_list'], "reg")
+
+        threshold = np.arange(0.0, 0.001, 0.00001)
+        threshold = np.concatenate((threshold, np.arange(0.001, 0.1, 0.01)))
+        threshold = np.concatenate((threshold, np.arange(0.1, 1.0, 0.1)))
+
+        avg_performance_list = []
+        std_performance_list = []
+        for t in threshold:
+            best_s_thresh, avg_performance, std_performance = best_stepsize_wrt_thresh2(learn_mu_het, true_mu,
+                                                                                        converged_step_sizes_het, t, exp_name_het,
+                                                                                        type=0)
+
+            avg_performance_list.append(avg_performance)
+            std_performance_list.append(std_performance)
+        axs[i, j].set_xscale("log")
+
+        drawPlotUncertainty(threshold, np.asarray(avg_performance_list), np.asarray(std_performance_list)
+                            , label="het", color="blue", axis=axs[i, j])
+
+        avg_performance_list = []
+        std_performance_list = []
+        for t in threshold:
+            best_s_thresh, avg_performance, std_performance = best_stepsize_wrt_thresh2(learn_mu_reg, true_mu,
+                                                                                        converged_step_sizes_reg, t, exp_name_reg,
+                                                                                        type=0)
+
+            avg_performance_list.append(avg_performance)
+            std_performance_list.append(std_performance)
+
+        drawPlotUncertainty(threshold, np.asarray(avg_performance_list), np.asarray(std_performance_list)
+                            , label="reg", color="red", axis=axs[i, j])
+
+
+        i, j = 1, 1
+        axs[i, j].set_title("soft thresh")
+        axs[i, j].spines['top'].set_visible(False)
+        axs[i, j].spines['right'].set_visible(False)
+        # best parameters plot soft threshold
+        threshold = np.arange(0, 128, 1)
+        avg_performance_list = []
+        std_performance_list = []
+        for t in threshold:
+            best_s_thresh, avg_performance, std_performance = best_stepsize_wrt_thresh2(learn_mu_het, true_mu,
+                                                                                        converged_step_sizes_het, t, exp_name_het,
+                                                                                        type=1)
+            avg_performance_list.append(avg_performance)
+            std_performance_list.append(std_performance)
+        # ax_soft.plot(threshold, avg_performance_list, label=label, color=color)
+        # ax_soft.set_xscale("log")
+        drawPlotUncertainty(threshold, np.asarray(avg_performance_list), np.asarray(std_performance_list)
+                            , label="het", color="blue", axis=axs[i, j])
+        avg_performance_list = []
+        std_performance_list = []
+        for t in threshold:
+            best_s_thresh, avg_performance, std_performance = best_stepsize_wrt_thresh2(learn_mu_reg, true_mu,
+                                                                                        converged_step_sizes_reg, t,
+                                                                                        exp_name_reg,
+                                                                                        type=1)
+            avg_performance_list.append(avg_performance)
+            std_performance_list.append(std_performance)
+        # ax_soft.plot(threshold, avg_performance_list, label=label, color=color)
+        # ax_soft.set_xscale("log")
+        drawPlotUncertainty(threshold, np.asarray(avg_performance_list), np.asarray(std_performance_list)
+                            , label="reg", color="red", axis=axs[i, j])
+        fig1.show()
+
 if __name__ == "__main__":
     threshold_hard = [0.1, 0.5, 1.0]
     threshold_soft = [32, 16, 8]
@@ -1083,6 +1237,7 @@ if __name__ == "__main__":
            "data/expwitherror/Irre_linearNoise",
            "data/expwitherror/Irre_rangeUniformNoise"
     ]
+    main5()
     # file_name= "data/IrreBias_fixedMu_linearNoise_fixedBiasAAA.p"
     # with open(file_name, 'rb') as fp:
     #     data = pickle.load(fp)
@@ -1091,12 +1246,12 @@ if __name__ == "__main__":
     #
     # draw_var_mse_stepsize(data, axs, color="blue", label="test", step_size_index=0, title=False)
     # fig.show()
-    for p in path:
+    # for p in path:
         # main(p)
         # main4(p)
         # fixedMu(p)
         # main2(p)
-        main4(p)
+        # main4(p)
 
 
     # main3(threshold_hard, threshold_soft)
