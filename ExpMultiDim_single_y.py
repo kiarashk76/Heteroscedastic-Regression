@@ -9,7 +9,7 @@ class MD_experiment_irreducible_linear_single_y(experiment_v2):
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
 
-        range_w = (0, 4)
+        range_w = (1, 5)
         self.w = np.round(np.random.uniform(range_w[0], range_w[1], (self.parameters['data_dim'], 1)))
         mu = np.dot(x, self.w)
 
@@ -30,7 +30,7 @@ class MD_experiment_rangeLBias_single_y(experiment_v2):
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
 
-        range_w = (0, 4)
+        range_w = (1, 5)
         self.w = np.round(np.random.uniform(range_w[0], range_w[1], (self.parameters['data_dim'], 1)))
         mu = np.dot(x, self.w)
 
@@ -51,7 +51,7 @@ class MD_experiment_irreducible_error_single_y(experiment_v2):
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
 
-        range_w = (0, 4)
+        range_w = (1, 5)
         self.w = np.round(np.random.uniform(range_w[0], range_w[1], (self.parameters['data_dim'], 1)))
         mu = np.dot(x, self.w)
 
@@ -72,7 +72,7 @@ class MD_experiment_quadraticBias_single_y(experiment_v2):
         x = np.round(np.random.uniform(range_data_points[0], range_data_points[1], (self.num_data_points, self.parameters['data_dim'])), 3)
         x = np.reshape(np.sort(x), (self.num_data_points, self.parameters['data_dim']))
 
-        range_w = (0, 4)
+        range_w = (1, 5)
         self.w = np.round(np.random.uniform(range_w[0], range_w[1], (self.parameters['data_dim'], 1)))
         mu = np.dot(x**2, self.w)
         y = mu

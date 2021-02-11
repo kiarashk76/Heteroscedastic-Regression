@@ -147,7 +147,7 @@ def best_stepsize_wrt_thresh(learn_mu, true_mu, step_sizes, threshold, name, typ
 
 def best_stepsize_wrt_thresh2(learn_mu, true_mu, step_sizes, threshold, name, type):
     def compute_mu_accuracy2(mu, true_mu, threshold, type=0):
-        diff = np.abs(mu - true_mu).mean(axis=-1)
+        diff = np.abs(mu - true_mu)
         if type == 0:
             acceptance = [diff[:] <= threshold]
             # performance = np.sum(acceptance[0]) / len(mu)
@@ -166,8 +166,8 @@ def best_stepsize_wrt_thresh2(learn_mu, true_mu, step_sizes, threshold, name, ty
     # print("finding the best step size for "+name+"... \n with threshold="+ str(threshold))
     for s_index in step_sizes:
         accuracy = compute_mu_accuracy2(learn_mu[:, -1, s_index], true_mu, threshold, type)
-        performance = np.mean(accuracy, axis=0)
-        std = np.std(accuracy, axis=0)
+        performance = np.mean(accuracy, axis=0).mean()
+        std = np.std(accuracy, axis=0).mean()
         if performance > max_value:
             max_value = performance
             max_std = std
@@ -1220,7 +1220,7 @@ def main5():
         drawPlotUncertainty(threshold, np.asarray(avg_performance_list), np.asarray(std_performance_list)
                             , label="reg", color="red", axis=axs[i, j])
         fig1.show()
-        fig1.savefig("data/final_results/" + exp_name_het + ".svg", format='svg')
+        fig1.savefig("final_results/"+ exp_name_het + ".svg", format='svg')
 
 if __name__ == "__main__":
     threshold_hard = [0.1, 0.5, 1.0]
